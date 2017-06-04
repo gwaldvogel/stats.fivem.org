@@ -21,6 +21,11 @@ class CreatePlayerCrawlsTable extends Migration
             $table->string('identifier');
             $table->string('name');
             $table->integer('ping');
+            $table->string('countryCode')->default('')->nullable();
+            $table->string('country')->default('')->nullable();
+            $table->string('city')->default('')->nullable();
+            $table->float('lat')->default(0.0)->nullable();
+            $table->float('lon')->default(0.0)->nullable();
             $table->timestamps();
         });
     }

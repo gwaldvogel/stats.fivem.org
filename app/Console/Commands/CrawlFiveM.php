@@ -58,6 +58,19 @@ class CrawlFiveM extends Command
             $serverObj = Server::firstOrCreate(['ipaddress' => $ip]);
             if($serverObj->ipaddress != $ip)
                 $serverObj->ipaddress = $ip;
+
+
+            $ip = explode(':', $ip);
+            $ip = $ip[0];
+
+            $location = geoip()->getLocation($ip);
+            if(!$location->default)
+            {
+                $serverObj->countryCode = $location->iso_code;
+                $serverObj->country = $location->country;
+                $serverObj->city = $location->city;
+            }
+
             $serverObj->save();
 
             $serverCrawl = new ServerCrawl();
@@ -88,11 +101,29 @@ class CrawlFiveM extends Command
             {
                 $playerObj = new PlayerCrawl();
                 $playerObj->server_crawl_id = $serverCrawl->id;
-                $playerObj->endpoint = $player->endpoint;
+                $playerIp = explode(':', $player->endpoint);
+                $playerIp = $playerIp[0];
+                if(filter_var($playerIp, FILTER_VALIDATE_IP))
+                    $playerObj->endpoint = $player->endpoint;
+                else
+                    $playerObj->endpoint = 'hidden';
                 $playerObj->fivemId = $player->id;
                 $playerObj->identifier = $player->identifiers[0];
                 $playerObj->name = $player->name;
                 $playerObj->ping = $player->ping;
+
+                if($playerObj->endpoint != 'hidden')
+                {
+                    $playerLocation = geoip()->getLocation($playerIp);
+                    if(!$playerLocation->default)
+                    {
+                        $playerObj->countryCode = $playerLocation->iso_code;
+                        $playerObj->country = $playerLocation->country;
+                        $playerObj->city = $playerLocation->city;
+                        $playerObj->lat = $playerLocation->lat;
+                        $playerObj->lon = $playerLocation->lon;
+                    }
+                }
                 $playerObj->save();
             }
         }
