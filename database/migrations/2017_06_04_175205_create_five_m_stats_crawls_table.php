@@ -15,8 +15,8 @@ class CreateFiveMStatsCrawlsTable extends Migration
     {
         Schema::create('five_m_stats_crawls', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('playerCount');
-            $table->integer('serverCount');
+            $table->integer('playerCount')->default(0);
+            $table->integer('serverCount')->default(0);
             $table->timestamps();
         });
     }

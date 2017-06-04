@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Server extends Model
 {
-    public $table = 'servers';
+    protected $table = 'servers';
+    protected $fillable = ['ipaddress'];
+
 }

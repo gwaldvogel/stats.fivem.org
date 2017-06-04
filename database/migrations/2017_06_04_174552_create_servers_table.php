@@ -16,7 +16,6 @@ class CreateServersTable extends Migration
         Schema::create('servers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('ipaddress')->unique();
-            $table->integer('latestServerCrawl');
             $table->timestamps();
         });
     }

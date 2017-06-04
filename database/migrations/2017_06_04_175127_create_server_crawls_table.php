@@ -15,6 +15,20 @@ class CreateServerCrawlsTable extends Migration
     {
         Schema::create('server_crawls', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('server_id');
+            $table->integer('clients');
+            $table->boolean('enhancedHostSupport');
+            $table->string('gamename');
+            $table->string('gametype');
+            $table->string('hostname');
+            $table->integer('iconVersion')->default(0);
+            $table->string('lastSeen');
+            $table->string('mapname');
+            $table->integer('protocol');
+            $table->text('resources');
+            $table->string('server');
+            $table->integer('svMaxclients');
+            $table->integer('sv_maxclients');
             $table->timestamps();
         });
     }
