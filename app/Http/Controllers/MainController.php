@@ -38,34 +38,38 @@ class MainController extends Controller
 
     public function serverList()
     {
-        $serversArray = [];
-        $servers = Cache::remember('servers', 5, function(){
-            return Server::all();
+        $serversArray = Cache::remember('servers:array', 5, function() {
+            $outArray = [];
+            $servers = Cache::remember('servers', 5, function(){
+                return Server::all();
+            });
+            foreach($servers as $server)
+            {
+                $crawl =ServerCrawl::where('server_id', '=', $server->id)
+                    ->orderBy('updated_at', 'desc')
+                    ->first();
+
+                // remove colors
+                $name = str_replace('^0', '', $crawl->hostname);
+                $name = str_replace('^1', '', $name);
+                $name = str_replace('^2', '', $name);
+                $name = str_replace('^3', '', $name);
+                $name = str_replace('^4', '', $name);
+                $name = str_replace('^5', '', $name);
+                $name = str_replace('^6', '', $name);
+                $name = str_replace('^7', '', $name);
+                $name = str_replace('^8', '', $name);
+                $name = str_replace('^9', '', $name);
+
+                $outArray[] = [
+                    'name' => $name,
+                    'ipaddress' => $server->ipaddress,
+                    'lastUpdated' => $crawl->updated_at
+                ];
+            }
+            return $outArray;
         });
-        foreach($servers as $server)
-        {
-            $crawl =ServerCrawl::where('server_id', '=', $server->id)
-                ->orderBy('updated_at', 'desc')
-                ->first();
 
-            // remove colors
-            $name = str_replace('^0', '', $crawl->hostname);
-            $name = str_replace('^1', '', $name);
-            $name = str_replace('^2', '', $name);
-            $name = str_replace('^3', '', $name);
-            $name = str_replace('^4', '', $name);
-            $name = str_replace('^5', '', $name);
-            $name = str_replace('^6', '', $name);
-            $name = str_replace('^7', '', $name);
-            $name = str_replace('^8', '', $name);
-            $name = str_replace('^9', '', $name);
-
-            $serversArray[] = [
-                'name' => $name,
-                'ipaddress' => $server->ipaddress,
-                'lastUpdated' => $crawl->updated_at
-            ];
-        }
         return view('serverList', [
             'servers' => $serversArray
         ]);
