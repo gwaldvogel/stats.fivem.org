@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\FiveMStatsCrawl;
+use App\Player;
 use App\PlayerCrawl;
 use App\Server;
 use App\ServerCrawl;
@@ -99,8 +100,11 @@ class CrawlFiveM extends Command
 
             foreach($data->players as $player)
             {
+                $uniquePlayer = Player::firstOrCreate(['identifier' => $player->identifiers[0]]);
+                $uniquePlayer->save();
                 $playerObj = new PlayerCrawl();
                 $playerObj->server_crawl_id = $serverCrawl->id;
+                $playerObj->unique_player_id = $uniquePlayer->id;
                 $playerIp = explode(':', $player->endpoint);
                 $playerIp = $playerIp[0];
                 if(filter_var($playerIp, FILTER_VALIDATE_IP))

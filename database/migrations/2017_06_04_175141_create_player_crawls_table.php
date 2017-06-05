@@ -15,6 +15,7 @@ class CreatePlayerCrawlsTable extends Migration
     {
         Schema::create('player_crawls', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('unique_player_id');
             $table->integer('server_crawl_id');
             $table->string('endpoint');
             $table->integer('fivemId');

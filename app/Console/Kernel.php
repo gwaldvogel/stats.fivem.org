@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CrawlFiveM;
+use App\Console\Commands\ParseCountryStats;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +15,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        CrawlFiveM::class
+        CrawlFiveM::class,
+        ParseCountryStats::class,
     ];
 
     /**
@@ -26,6 +28,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('crawl:fivem')->everyFiveMinutes();
+        $schedule->command('parse:countrystats')->everyThirtyMinutes();
     }
 
     /**
