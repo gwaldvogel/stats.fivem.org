@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1>FiveM Stats</h1>
-                    <p>FiveM Stats collects usage data from the FiveM Master list and visualizes them.</p>
+                    <p>FiveM Stats collects usage data from the FiveM Master list and visualizes them. This website is not an official FiveM project.</p>
                 </div>
             </div>
         </div>
