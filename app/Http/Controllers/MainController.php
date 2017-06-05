@@ -38,9 +38,9 @@ class MainController extends Controller
 
     public function serverList()
     {
-        $serversArray = Cache::remember('servers:array', 5, function() {
+        $serversArray = Cache::remember('servers:array', 30, function() {
             $outArray = [];
-            $servers = Cache::remember('servers', 5, function(){
+            $servers = Cache::remember('servers', 30, function(){
                 return Server::all();
             });
             foreach($servers as $server)
