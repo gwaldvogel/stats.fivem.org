@@ -17,17 +17,9 @@ class MainController extends Controller
             ->orderBy('updated_at', 'desc')
             ->first();
 
-        //var_dump($countryStatsServer);
-        foreach($countryStatsServer->entries() as $entry)
-        {
-            var_dump($entry);
-        }
-
         $countryStatsPlayers = CountryStats::where('servers', '=', false)
             ->orderBy('updated_at', 'desc')
             ->first();
-
-
 
         return view('index', [
             'FiveMLastHour' => $fivemStatsLastH,
