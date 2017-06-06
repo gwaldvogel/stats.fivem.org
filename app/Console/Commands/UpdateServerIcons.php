@@ -52,9 +52,13 @@ class UpdateServerIcons extends Command
             $result = @file_get_contents($url, false, $context);
             if($result !== false)
             {
+                $this->info('Processing info for ' . $server->ipaddress);
                 $result = json_decode($result);
-                $server->icon = $result->icon;
-                $server->save();
+                if(isset($result->icon))
+                {
+                    $server->icon = $result->icon;
+                    $server->save();
+                }
             }
         }
     }
