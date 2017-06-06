@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Server;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Console\Command;
 
 class UpdateServerIcons extends Command
@@ -38,13 +39,7 @@ class UpdateServerIcons extends Command
      */
     public function handle()
     {
-        $opts = array('http' =>
-            array(
-                'timeout' => 5
-            )
-        );
-        $context  = stream_context_create($opts);
-
+        $start = microtime(true);
         if($this->argument('all'))
             $servers = Server::all();
         else
@@ -52,12 +47,15 @@ class UpdateServerIcons extends Command
 
         foreach($servers as $server)
         {
-            $url = 'http://' . $server->ipaddress . '/info.json';
-            $result = @file_get_contents($url, false, $context);
-            if($result !== false)
-            {
-                $this->info('Processing info for ' . $server->ipaddress);
-                $result = json_decode($result);
+            try {
+                $this->info('Handling: ' . $server->ipaddress);
+                $client = new \GuzzleHttp\Client([
+                    'base_uri' => 'http://' . $server->ipaddress,
+                    'timeout' => 3.0,
+                ]);
+
+                $result = $client->request('GET', '/info.json');
+                $result = json_decode($result->getBody());
                 if(isset($result->icon))
                 {
                     $hash = sha1($result->icon);
@@ -71,6 +69,12 @@ class UpdateServerIcons extends Command
                     $server->save();
                 }
             }
+            catch(RequestException $e)
+            {
+                $this->error('Exception for ' . $server->ipaddress . ": " . $e->getCode() . " " . $e->getMessage());
+            }
+
         }
+        $this->info('Done after ' . round((microtime(true) - $start),3) . 'secs');
     }
 }
