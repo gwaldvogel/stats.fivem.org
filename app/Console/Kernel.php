@@ -32,6 +32,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('crawl:fivem')->everyFiveMinutes();
+        $schedule->command('crawl:icons')->everyTenMinutes();
         $schedule->command('parse:countrystats')->everyThirtyMinutes();
         $schedule->command('cache:serverlist')->everyThirtyMinutes();
     }

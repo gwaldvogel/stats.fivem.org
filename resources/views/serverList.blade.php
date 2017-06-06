@@ -18,6 +18,7 @@
                         <table class="table table-striped">
                             <thead>
                             <tr>
+                                <th>Icon</th>
                                 <th>Server Name</th>
                                 <th>IP adress</th>
                                 <th>Last updated</th>
@@ -26,6 +27,11 @@
                             <tbody>
                             @foreach($servers as $server)
                                 <tr>
+                                    <td>
+                                        @if(!empty($server['icon']))
+                                            <img src="data:image/jpeg;base64,{{ $server['icon'] }}" alt="" style="width: 48px; height: 48px;" />
+                                        @endif
+                                    </td>
                                     <td>{{ $server['name'] }}</td>
                                     <td>{{ $server['ipaddress'] }}</td>
                                     <td>{{ $server['lastUpdated'] }}</td>

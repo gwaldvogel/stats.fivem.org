@@ -67,7 +67,8 @@ class CreateServerListCache extends Command
             $outArray[] = [
                 'name' => $name,
                 'ipaddress' => $server->ipaddress,
-                'lastUpdated' => $crawl->updated_at
+                'lastUpdated' => $crawl->updated_at,
+                'icon' => $server->icon,
             ];
         }
         Cache::put('servers:array', $outArray, 30);
