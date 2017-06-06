@@ -45,6 +45,7 @@ class CreateServerListCache extends Command
 
         foreach($servers as $server)
         {
+            $start = microtime(true);
             $this->info('Creating cache for ' . $server->ipaddress);
             $crawl = ServerCrawl::where('server_id', '=', $server->id)
                 ->orderBy('updated_at', 'desc')
@@ -67,6 +68,7 @@ class CreateServerListCache extends Command
                 'ipaddress' => $server->ipaddress,
                 'lastUpdated' => $crawl->updated_at
             ];
+            $this->info('Done after ' . (microtime(true) - $start) . ' msecs');
         }
         Cache::put('servers:array', $outArray, 30);
     }
