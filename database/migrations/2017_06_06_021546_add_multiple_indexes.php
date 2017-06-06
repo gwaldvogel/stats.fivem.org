@@ -31,12 +31,11 @@ class AddMultipleIndexes extends Migration
     public function down()
     {
         Schema::table('country_stats_entries', function (Blueprint $table) {
-            $table->dropIndex('country_stats_id');
+            $table->dropIndex(['country_stats_id']);
         });
 
         Schema::table('player_crawls', function (Blueprint $table) {
-            $table->dropIndex('unique_player_id');
-            $table->dropIndex('server_crawl_id');
+            $table->dropIndex(['unique_player_id', 'server_crawl_id']);
         });
     }
 }
