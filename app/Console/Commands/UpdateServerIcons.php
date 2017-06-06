@@ -49,10 +49,13 @@ class UpdateServerIcons extends Command
         foreach($servers as $server)
         {
             $url = 'http://' . $server->ipaddress . '/info.json';
-            $result = file_get_contents($url, false, $context);
-            $result = json_decode($result);
-            $server->icon = $result->icon;
-            $server->save();
+            $result = @file_get_contents($url, false, $context);
+            if($result !== false)
+            {
+                $result = json_decode($result);
+                $server->icon = $result->icon;
+                $server->save();
+            }
         }
     }
 }
