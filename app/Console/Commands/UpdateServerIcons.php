@@ -12,7 +12,7 @@ class UpdateServerIcons extends Command
      *
      * @var string
      */
-    protected $signature = 'crawl:icons';
+    protected $signature = 'crawl:icons {all=false}';
 
     /**
      * The console command description.
@@ -45,7 +45,11 @@ class UpdateServerIcons extends Command
         );
         $context  = stream_context_create($opts);
 
-        $servers = Server::whereNull('icon')->get();
+        if($this->argument('all'))
+            $servers = Server::all();
+        else
+            $servers = Server::whereNull('icon')->get();
+
         foreach($servers as $server)
         {
             $url = 'http://' . $server->ipaddress . '/info.json';
@@ -56,7 +60,14 @@ class UpdateServerIcons extends Command
                 $result = json_decode($result);
                 if(isset($result->icon))
                 {
-                    $server->icon = $result->icon;
+                    $hash = sha1($result->icon);
+                    $server->icon = "/server_icons/" . $hash . ".png";
+                    $path = public_path() . $server->icon;
+                    if(!file_exists($path))
+                    {
+                        $image = base64_decode($result->icon);
+                        file_put_contents($path, $image);
+                    }
                     $server->save();
                 }
             }

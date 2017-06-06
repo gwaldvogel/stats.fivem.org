@@ -29,7 +29,7 @@
                                 <tr>
                                     <td>
                                         @if(!empty($server['icon']))
-                                            <img src="data:image/jpeg;base64,{{ $server['icon'] }}" alt="" style="width: 48px; height: 48px;" />
+                                            <img src="{{ url($server['icon']) }}" alt="" style="width: 48px; height: 48px;" />
                                         @endif
                                     </td>
                                     <td>{{ $server['name'] }}</td>
