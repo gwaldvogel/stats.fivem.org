@@ -117,4 +117,16 @@ class ParseCountryStats extends Command
         $countryCode = strtoupper($countryCode);
         return isset(self::$countryCodes->$countryCode) ? self::$countryCodes->$countryCode : $countryCode;
     }
+
+    public static function convertCountryCodeBack($countryCode)
+    {
+        if(!isset(self::$countryCodes))
+        {
+            self::$countryCodes = json_decode(file_get_contents('http://country.io/iso3.json'));
+        }
+        $countryCodes = json_decode(json_encode(self::$countryCodes), true);
+        $countryCode = strtoupper($countryCode);
+        $key = array_search($countryCode, $countryCodes);
+        return isset($key) ? $key : $countryCode;
+    }
 }

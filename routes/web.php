@@ -11,5 +11,15 @@
 |
 */
 
-Route::get('/', 'MainController@index');
+Route::get('/', function(){
+    return redirect('/dashboard');
+});
+Route::get('/dashboard', 'MainController@dashboard');
 Route::get('/serverlist', 'MainController@serverList');
+
+Route::get('/serversByCountry', 'MainController@serversByCountry');
+Route::get('/playersByCountry', 'MainController@playersByCountry');
+
+Route::get('/foo', function(){
+    return view('foo');
+});

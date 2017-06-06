@@ -74,4 +74,19 @@ class MainController extends Controller
             'servers' => $serversArray
         ]);
     }
+
+    public function dashboard()
+    {
+        return view('dashboard');
+    }
+
+    public function serversByCountry()
+    {
+        return view('serversMap');
+    }
+
+    public function playersByCountry()
+    {
+        return view('playersMap');
+    }
 }

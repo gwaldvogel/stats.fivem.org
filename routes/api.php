@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/players/since/{ageInMinutes}', 'PrivateApiController@getPlayerCounts');
+Route::get('/servers/since/{ageInMinutes}', 'PrivateApiController@getServerCounts');
+Route::get('/serversAndPlayers/since/{ageInMinutes}', 'PrivateApiController@getSeverAndPlayerCounts');
+
+Route::get('/players/byCountry', 'PrivateApiController@getCountryPlayerCount');
+Route::get('/servers/byCountry', 'PrivateApiController@getCountryServerCount');
