@@ -40,12 +40,11 @@ class MainController extends Controller
     {
         $serversArray = Cache::remember('servers:array', 30, function() {
             $outArray = [];
-            $servers = Cache::remember('servers', 30, function(){
-                return Server::all();
-            });
+            $servers = Server::all();
+
             foreach($servers as $server)
             {
-                $crawl =ServerCrawl::where('server_id', '=', $server->id)
+                $crawl = ServerCrawl::where('server_id', '=', $server->id)
                     ->orderBy('updated_at', 'desc')
                     ->first();
 
