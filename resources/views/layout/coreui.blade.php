@@ -132,8 +132,7 @@
 </div>
 
 <footer class="app-footer">
-    FiveM Stats is not affiliated with or endorsed by Rockstar North, Take-Two Interactive or other rightsholders.
-    Any trademarks used belong to their respective owners.
+    FiveM Stats is not an official FiveM project.
     <span class="float-right"> Powered by <a href="http://coreui.io">CoreUI</a></span>
 </footer>
 
