@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Server;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 
 class UpdateServerIcons extends Command
@@ -13,7 +14,7 @@ class UpdateServerIcons extends Command
      *
      * @var string
      */
-    protected $signature = 'crawl:icons {all=false}';
+    protected $signature = 'crawl:icons {all?}';
 
     /**
      * The console command description.
@@ -40,8 +41,11 @@ class UpdateServerIcons extends Command
     public function handle()
     {
         $start = microtime(true);
-        if($this->argument('all'))
+        if($this->argument('all') == true)
+        {
+            $this->info('Rebuilding all server icons');
             $servers = Server::all();
+        }
         else
             $servers = Server::whereNull('icon')->get();
 
@@ -49,7 +53,7 @@ class UpdateServerIcons extends Command
         {
             try {
                 $this->info('Handling: ' . $server->ipaddress);
-                $client = new \GuzzleHttp\Client([
+                $client = new Client([
                     'base_uri' => 'http://' . $server->ipaddress,
                     'timeout' => 3.0,
                 ]);
