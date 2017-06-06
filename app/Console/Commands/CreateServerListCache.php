@@ -41,13 +41,13 @@ class CreateServerListCache extends Command
      */
     public function handle()
     {
+        $start = microtime(true);
         $outArray = [];
         $servers = Server::all();
 
         foreach($servers as $server)
         {
-            $start = microtime(true);
-            $this->info('Creating cache for ' . $server->ipaddress);
+            //$this->info('Creating cache for ' . $server->ipaddress);
             $crawl = DB::table('server_crawls')
                 ->where('server_id', $server->id)
                 ->orderBy('updated_at', 'desc')
@@ -70,8 +70,9 @@ class CreateServerListCache extends Command
                 'ipaddress' => $server->ipaddress,
                 'lastUpdated' => $crawl->updated_at
             ];
-            $this->info('Done after ' . (microtime(true) - $start) . ' secs');
+            //$this->info('Done after ' . (microtime(true) - $start) . ' secs');
         }
         Cache::put('servers:array', $outArray, 30);
+        $this->info('Done in ' . round(microtime(true) - $start, 3) . ' secs');
     }
 }
