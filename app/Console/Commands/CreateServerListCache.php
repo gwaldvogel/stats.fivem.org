@@ -6,6 +6,7 @@ use App\Server;
 use App\ServerCrawl;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class CreateServerListCache extends Command
 {
@@ -47,7 +48,8 @@ class CreateServerListCache extends Command
         {
             $start = microtime(true);
             $this->info('Creating cache for ' . $server->ipaddress);
-            $crawl = ServerCrawl::where('server_id', '=', $server->id)
+            $crawl = DB::table('server_crawls')
+                ->where('server_id', $server->id)
                 ->orderBy('updated_at', 'desc')
                 ->first();
 
@@ -68,7 +70,7 @@ class CreateServerListCache extends Command
                 'ipaddress' => $server->ipaddress,
                 'lastUpdated' => $crawl->updated_at
             ];
-            $this->info('Done after ' . (microtime(true) - $start) . ' msecs');
+            $this->info('Done after ' . (microtime(true) - $start) . ' secs');
         }
         Cache::put('servers:array', $outArray, 30);
     }
