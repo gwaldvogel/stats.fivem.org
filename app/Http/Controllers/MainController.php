@@ -2,30 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\CountryStats;
 use App\FiveMStatsCrawl;
-use App\Server;
-use App\ServerCrawl;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Response;
 
 class MainController extends Controller
 {
     public function index()
     {
-        $fivemStatsLastH = Cache::remember('fivemstatscrawl', 5, function() {
-           return FiveMStatsCrawl::where('updated_at', '>', Carbon::now()->subHours(1))->get();
+        $fivemStatsLastH = Cache::remember('fivemstatscrawl', 5, function () {
+            return FiveMStatsCrawl::where('updated_at', '>', Carbon::now()->subHours(1))->get();
         });
 
-        $countryStatsServer = Cache::remember('countrystatsserver', 5, function() {
+        $countryStatsServer = Cache::remember('countrystatsserver', 5, function () {
             return CountryStats::where('servers', '=', true)
                 ->orderBy('updated_at', 'desc')
                 ->first();
         });
 
-        $countryStatsPlayers = Cache::remember('countrystatsplayers', 5, function() {
+        $countryStatsPlayers = Cache::remember('countrystatsplayers', 5, function () {
             return CountryStats::where('servers', '=', false)
                 ->orderBy('updated_at', 'desc')
                 ->first();
@@ -34,19 +30,18 @@ class MainController extends Controller
         return view('index', [
             'FiveMLastHour' => $fivemStatsLastH,
             'CountryStatsServer' => $countryStatsServer->entries,
-            'CountryStatsPlayers' => $countryStatsPlayers->entries]);
+            'CountryStatsPlayers' => $countryStatsPlayers->entries, ]);
     }
 
     public function serverList()
     {
         $serversArray = [];
-        if(Cache::has('servers:array'))
-        {
+        if (Cache::has('servers:array')) {
             $serversArray = Cache::get('servers:array');
         }
 
         return view('serverList', [
-            'servers' => $serversArray
+            'servers' => $serversArray,
         ]);
     }
 

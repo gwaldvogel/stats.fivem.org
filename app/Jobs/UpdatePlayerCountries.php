@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
-use App\OverallStatistics;
 use App\PlayerCountry;
+use App\OverallStatistics;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -39,13 +39,13 @@ class UpdatePlayerCountries implements ShouldQueue
         $countryCodeToCountry = [];
         foreach ($this->ipAdresses as $ipAdress) {
             $location = geoip()->getLocation($ipAdress);
-            if (!$location->default) {
+            if (! $location->default) {
                 if (array_key_exists($location->iso_code, $playerCount)) {
                     $playerCount[$location->iso_code]++;
                 } else {
                     $playerCount[$location->iso_code] = 1;
                 }
-                if (!array_key_exists($location->iso_code, $countryCodeToCountry)) {
+                if (! array_key_exists($location->iso_code, $countryCodeToCountry)) {
                     $countryCodeToCountry[$location->iso_code] = $location->country;
                 }
             }
