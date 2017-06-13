@@ -4,8 +4,8 @@ namespace App\Console\Commands;
 
 use App\Server;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Cache;
 use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Support\Facades\Cache;
 
 class CreateServerListCache extends Command
 {
