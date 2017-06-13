@@ -15,7 +15,7 @@ class CreateServerResourcesTable extends Migration
     {
         Schema::create('server_resources', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->timestamps();
         });
     }

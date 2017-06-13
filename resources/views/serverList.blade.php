@@ -27,11 +27,9 @@
                             <tbody>
                             @foreach($servers as $server)
                                 <tr>
-                                    <td>
-                                        @if(!empty($server['icon']))
+                                    <td>@if(!empty($server['icon']))
                                             <img src="{{ url($server['icon']) }}" alt="" style="width: 48px; height: 48px;" />
-                                        @endif
-                                    </td>
+                                        @endif</td>
                                     <td>{{ $server['name'] }}</td>
                                     <td>{{ $server['ipaddress'] }}</td>
                                     <td>{{ $server['lastUpdated'] }}</td>

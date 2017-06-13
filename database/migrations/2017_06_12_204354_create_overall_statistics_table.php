@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddServerIconColumn extends Migration
+class CreateOverallStatisticsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddServerIconColumn extends Migration
      */
     public function up()
     {
-        Schema::table('servers', function(Blueprint $table) {
-            $table->text('icon')->after('city')->nullable();
+        Schema::create('overall_statistics', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('clients')->default(0);
+            $table->unsignedInteger('servers')->default(0);
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ class AddServerIconColumn extends Migration
      */
     public function down()
     {
-        Schema::table('servers', function(Blueprint $table) {
-            $table->dropColumn('icon');
-        });
+        Schema::dropIfExists('overall_statistics');
     }
 }

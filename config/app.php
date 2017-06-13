@@ -169,6 +169,7 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
 
         \Torann\GeoIP\GeoIPServiceProvider::class,
+        Vinkla\Hashids\HashidsServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -229,6 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
+        'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
 
     ],
 

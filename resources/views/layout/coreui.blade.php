@@ -132,7 +132,7 @@
 </div>
 
 <footer class="app-footer">
-    FiveM Stats is not an official FiveM project.
+    Version:  1.0.0-alpha-{{ env('GIT_SHORTHASH') }}
     <span class="float-right"> Powered by <a href="http://coreui.io">CoreUI</a></span>
 </footer>
 

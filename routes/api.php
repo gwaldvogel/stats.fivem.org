@@ -15,7 +15,9 @@ use Illuminate\Http\Request;
 
 Route::get('/players/since/{ageInMinutes}', 'PrivateApiController@getPlayerCounts');
 Route::get('/servers/since/{ageInMinutes}', 'PrivateApiController@getServerCounts');
-Route::get('/serversAndPlayers/since/{ageInMinutes}', 'PrivateApiController@getSeverAndPlayerCounts');
+Route::get('/serversAndPlayers/since/{ageInMinutes}', 'PrivateApiController@getServerAndPlayerCounts');
 
 Route::get('/players/byCountry', 'PrivateApiController@getCountryPlayerCount');
 Route::get('/servers/byCountry', 'PrivateApiController@getCountryServerCount');
+
+Route::get('/server', 'PrivateApiController@getServers');

@@ -52,10 +52,10 @@ class UpdateServerIcons extends Command
         foreach($servers as $server)
         {
             try {
-                $this->info('Handling: ' . $server->ipaddress);
+                $this->info('Handling: ' . $server->ip.':'.$server->port);
                 $client = new Client([
-                    'base_uri' => 'http://' . $server->ipaddress,
-                    'timeout' => 3.0,
+                    'base_uri' => 'http://' . $server->ip.':'.$server->port,
+                    'timeout' => 2.0,
                 ]);
 
                 $result = $client->request('GET', '/info.json');
@@ -63,8 +63,8 @@ class UpdateServerIcons extends Command
                 if(isset($result->icon))
                 {
                     $hash = sha1($result->icon);
-                    $server->icon = "/server_icons/" . $hash . ".png";
-                    $path = public_path() . $server->icon;
+                    $server->icon = $hash . ".png";
+                    $path = public_path() . "/server_icons/" . $server->icon;
                     if(!file_exists($path))
                     {
                         $image = base64_decode($result->icon);
@@ -75,7 +75,7 @@ class UpdateServerIcons extends Command
             }
             catch(RequestException $e)
             {
-                $this->error('Exception for ' . $server->ipaddress . ": " . $e->getCode() . " " . $e->getMessage());
+                $this->error('Exception for ' . $server->ip.':'.$server->port . ": " . $e->getCode() . " " . $e->getMessage());
             }
 
         }

@@ -47,28 +47,11 @@ class CreateServerListCache extends Command
 
         foreach($servers as $server)
         {
-            $crawl = DB::table('server_crawls')
-                ->where('server_id', $server->id)
-                ->orderBy('updated_at', 'desc')
-                ->first();
-
-            // remove colors
-            $name = str_replace('^0', '', $crawl->hostname);
-            $name = str_replace('^1', '', $name);
-            $name = str_replace('^2', '', $name);
-            $name = str_replace('^3', '', $name);
-            $name = str_replace('^4', '', $name);
-            $name = str_replace('^5', '', $name);
-            $name = str_replace('^6', '', $name);
-            $name = str_replace('^7', '', $name);
-            $name = str_replace('^8', '', $name);
-            $name = str_replace('^9', '', $name);
-
             $outArray[] = [
-                'name' => $name,
-                'ipaddress' => $server->ipaddress,
-                'lastUpdated' => $crawl->updated_at,
-                'icon' => $server->icon,
+                'name' => strlen($server->name) > 63 ? substr($server->name, 0, 60) . '...' : $server->name,
+                'ipaddress' => $server->ip.':'.$server->port,
+                'lastUpdated' => $server->updated_at,
+                'icon' => empty($server->icon) ? null : '/server_icons/' . $server->icon,
             ];
         }
         Cache::put('servers:array', $outArray, 30);

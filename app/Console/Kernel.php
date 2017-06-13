@@ -2,9 +2,13 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CleanupServerIconCache;
 use App\Console\Commands\CrawlFiveM;
+use App\Console\Commands\CrawlFivemApi;
 use App\Console\Commands\CreateServerListCache;
+use App\Console\Commands\GenerateHashidsSalt;
 use App\Console\Commands\ParseCountryStats;
+use App\Console\Commands\UpdateGitVersion;
 use App\Console\Commands\UpdateServerIcons;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -17,10 +21,13 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        CrawlFiveM::class,
         ParseCountryStats::class,
         CreateServerListCache::class,
         UpdateServerIcons::class,
+        UpdateGitVersion::class,
+        GenerateHashidsSalt::class,
+        CrawlFivemApi::class,
+        CleanupServerIconCache::class,
     ];
 
     /**
@@ -31,10 +38,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('crawl:fivem')->everyFiveMinutes();
-        $schedule->command('crawl:icons')->everyTenMinutes();
-        $schedule->command('parse:countrystats')->everyThirtyMinutes();
+        $schedule->command('crawl')->everyFiveMinutes();
+        $schedule->command('crawl:icons')->twiceDaily();
         $schedule->command('cache:serverlist')->everyThirtyMinutes();
+        $schedule->command('cache:cleanup:servericons')->daily();
     }
 
     /**

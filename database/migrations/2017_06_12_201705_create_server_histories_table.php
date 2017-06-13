@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCountryStatsTable extends Migration
+class CreateServerHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,13 @@ class CreateCountryStatsTable extends Migration
      */
     public function up()
     {
-        Schema::create('country_stats', function (Blueprint $table) {
+        Schema::create('server_histories', function (Blueprint $table) {
             $table->increments('id');
-            $table->boolean('servers');
+            $table->string('server_id');
+            $table->string('name')->nullable();
+            $table->string('mapname')->nullable();
+            $table->string('gametype')->nullable();
+            $table->integer('clients')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +31,6 @@ class CreateCountryStatsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('country_stats');
+        Schema::dropIfExists('server_histories');
     }
 }
