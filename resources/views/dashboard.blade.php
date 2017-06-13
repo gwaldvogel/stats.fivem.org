@@ -23,9 +23,6 @@
                 <div class="col-sm-6 col-lg-6">
                     <div class="card card-inverse card-info">
                         <div class="card-block pb-0">
-                            <button type="button" class="btn btn-transparent active p-0 float-right">
-                                <i class="icon-location-pin"></i>
-                            </button>
                             <h4 class="mb-0" id="currentServerCount"></h4>
                             <p>Servers online in the last hour</p>
                         </div>
