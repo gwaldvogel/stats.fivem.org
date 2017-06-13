@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use App\PlayerCrawl;
 use App\ServerCrawl;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\App;
 
@@ -41,17 +41,14 @@ class CleanupCrawls extends Command
      */
     public function handle()
     {
-        if (App::isLocal())
-        {
+        if (App::isLocal()) {
             $crawls = ServerCrawl::where('updated_at', '<', Carbon::now()->subWeek(1))->get();
-            foreach($crawls as $crawl)
-            {
+            foreach ($crawls as $crawl) {
                 $crawl->delete();
             }
 
             $players = PlayerCrawl::where('updated_at', '<', Carbon::now()->subWeek(1))->get();
-            foreach($players as $player)
-            {
+            foreach ($players as $player) {
                 $player->delete();
             }
         }

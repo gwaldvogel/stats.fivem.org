@@ -37,7 +37,7 @@ class GenerateHashidsSalt extends Command
      */
     public function handle()
     {
-        $salt = sha1(microtime() . (time() * rand(0,94851)) . time());
+        $salt = sha1(microtime().(time() * rand(0, 94851)).time());
         $envFile = file_get_contents($this->laravel->environmentFilePath());
         $envFile = str_replace('HASHIDS_SALT='.env('HASHIDS_SALT'), 'HASHIDS_SALT='.$salt, $envFile);
         file_put_contents($this->laravel->environmentFilePath(), $envFile);
