@@ -2,12 +2,12 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
+use App\OverallStatistics;
+use Illuminate\Console\Command;
 use App\Jobs\UpdatePlayerCountries;
 use App\Jobs\UpdateServerCountries;
 use App\Jobs\UpdateServerStatistics;
-use App\OverallStatistics;
-use Carbon\Carbon;
-use Illuminate\Console\Command;
 
 class CrawlFivemApi extends Command
 {
@@ -73,6 +73,6 @@ class CrawlFivemApi extends Command
         dispatch(new UpdatePlayerCountries($playerIpAdresses, $overallStatistics));
         dispatch(new UpdateServerCountries($ipAdresses, $overallStatistics));
 
-        $this->info($overallStatistics->clients . ' players on ' . $overallStatistics->servers . ' servers crawled in ' . (microtime(true) - $start) . ' secs.');
+        $this->info($overallStatistics->clients.' players on '.$overallStatistics->servers.' servers crawled in '.(microtime(true) - $start).' secs.');
     }
 }

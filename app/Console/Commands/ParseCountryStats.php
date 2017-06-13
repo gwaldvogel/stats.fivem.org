@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Player;
+use App\Server;
+use App\PlayerCrawl;
 use App\CountryStats;
 use App\CountryStatsEntry;
-use App\Player;
-use App\PlayerCrawl;
-use App\Server;
 use Illuminate\Console\Command;
 
 class ParseCountryStats extends Command
@@ -47,18 +47,17 @@ class ParseCountryStats extends Command
         $playerCountries = [];
         $countryCodesToCountries = [];
         $players = Player::all();
-        foreach($players as $player)
-        {
+        foreach ($players as $player) {
             $crawl = PlayerCrawl::where('unique_player_id', '=', $player->id)
                 ->orderBy('updated_at', 'desc')
                 ->first();
 
-            if(!empty($crawl->country) && !empty($crawl->countryCode))
-            {
-                if(array_key_exists($crawl->country, $playerCountries))
+            if (! empty($crawl->country) && ! empty($crawl->countryCode)) {
+                if (array_key_exists($crawl->country, $playerCountries)) {
                     $playerCountries[$crawl->country]++;
-                else
+                } else {
                     $playerCountries[$crawl->country] = 1;
+                }
 
                 $countryCodesToCountries[$crawl->country] = $crawl->countryCode;
             }
@@ -67,28 +66,24 @@ class ParseCountryStats extends Command
         $countryStats = new CountryStats();
         $countryStats->servers = false;
         $countryStats->save();
-        foreach($playerCountries as $country => $value)
-        {
+        foreach ($playerCountries as $country => $value) {
             $countryStatsEntry = new CountryStatsEntry();
             $countryStatsEntry->country_stats_id = $countryStats->id;
             $countryStatsEntry->country = $country;
-            $countryStatsEntry->countryCode = ParseCountryStats::convertCountryCode($countryCodesToCountries[$country]);
+            $countryStatsEntry->countryCode = self::convertCountryCode($countryCodesToCountries[$country]);
             $countryStatsEntry->value = $value;
             $countryStatsEntry->save();
         }
 
-
-
         $serverCountries = [];
         $servers = Server::all();
-        foreach($servers as $server)
-        {
-            if(!empty($server->country) && !empty($server->countryCode))
-            {
-                if(array_key_exists($server->country, $serverCountries))
+        foreach ($servers as $server) {
+            if (! empty($server->country) && ! empty($server->countryCode)) {
+                if (array_key_exists($server->country, $serverCountries)) {
                     $serverCountries[$server->country]++;
-                else
+                } else {
                     $serverCountries[$server->country] = 1;
+                }
 
                 $countryCodesToCountries[$server->country] = $server->countryCode;
             }
@@ -97,12 +92,11 @@ class ParseCountryStats extends Command
         $countryStats = new CountryStats();
         $countryStats->servers = true;
         $countryStats->save();
-        foreach($serverCountries as $country => $value)
-        {
+        foreach ($serverCountries as $country => $value) {
             $countryStatsEntry = new CountryStatsEntry();
             $countryStatsEntry->country_stats_id = $countryStats->id;
             $countryStatsEntry->country = $country;
-            $countryStatsEntry->countryCode = ParseCountryStats::convertCountryCode($countryCodesToCountries[$country]);
+            $countryStatsEntry->countryCode = self::convertCountryCode($countryCodesToCountries[$country]);
             $countryStatsEntry->value = $value;
             $countryStatsEntry->save();
         }
@@ -110,23 +104,23 @@ class ParseCountryStats extends Command
 
     public static function convertCountryCode($countryCode)
     {
-        if(!isset(self::$countryCodes))
-        {
+        if (! isset(self::$countryCodes)) {
             self::$countryCodes = json_decode(file_get_contents('http://country.io/iso3.json'));
         }
         $countryCode = strtoupper($countryCode);
+
         return isset(self::$countryCodes->$countryCode) ? self::$countryCodes->$countryCode : $countryCode;
     }
 
     public static function convertCountryCodeBack($countryCode)
     {
-        if(!isset(self::$countryCodes))
-        {
+        if (! isset(self::$countryCodes)) {
             self::$countryCodes = json_decode(file_get_contents('http://country.io/iso3.json'));
         }
         $countryCodes = json_decode(json_encode(self::$countryCodes), true);
         $countryCode = strtoupper($countryCode);
         $key = array_search($countryCode, $countryCodes);
+
         return isset($key) ? $key : $countryCode;
     }
 }

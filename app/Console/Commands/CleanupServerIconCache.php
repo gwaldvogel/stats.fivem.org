@@ -40,14 +40,11 @@ class CleanupServerIconCache extends Command
     {
         $directory = public_path().'/server_icons/';
         $files = scandir($directory);
-        foreach($files as $file)
-        {
-            if($file != '.' && $file != '..' && $file != '.gitignore')
-            {
+        foreach ($files as $file) {
+            if ($file != '.' && $file != '..' && $file != '.gitignore') {
                 $server = Server::where('icon', '=', $file)->first();
-                if(!$server)
-                {
-                    unlink($directory . $file);
+                if (! $server) {
+                    unlink($directory.$file);
                 }
             }
         }

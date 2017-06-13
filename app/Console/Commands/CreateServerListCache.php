@@ -3,10 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Server;
-use App\ServerCrawl;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 class CreateServerListCache extends Command
 {
@@ -45,16 +43,15 @@ class CreateServerListCache extends Command
         $outArray = [];
         $servers = Server::all();
 
-        foreach($servers as $server)
-        {
+        foreach ($servers as $server) {
             $outArray[] = [
-                'name' => strlen($server->name) > 63 ? substr($server->name, 0, 60) . '...' : $server->name,
+                'name' => strlen($server->name) > 63 ? substr($server->name, 0, 60).'...' : $server->name,
                 'ipaddress' => $server->ip.':'.$server->port,
                 'lastUpdated' => $server->updated_at,
-                'icon' => empty($server->icon) ? null : '/server_icons/' . $server->icon,
+                'icon' => empty($server->icon) ? null : '/server_icons/'.$server->icon,
             ];
         }
         Cache::put('servers:array', $outArray, 30);
-        $this->info('Done in ' . round(microtime(true) - $start, 3) . ' secs');
+        $this->info('Done in '.round(microtime(true) - $start, 3).' secs');
     }
 }

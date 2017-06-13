@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', function(){
+Route::get('/', function () {
     return redirect('/dashboard');
 });
 Route::get('/dashboard', 'MainController@dashboard');
