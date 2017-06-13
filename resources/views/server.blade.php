@@ -1,4 +1,9 @@
 @extends('layout.coreui')
+
+@section('title')
+    {{ $server->name }}
+@endsection
+
 @section('breadcrumbs')
     <li class="breadcrumb-item"><a href="{{ url('/serverlist') }}">Server list</a></li>
     <li class="breadcrumb-item active">{{ strlen($server->name) > 50 ? substr($server->name, 0, 47).'...' : $server->name }}</li>

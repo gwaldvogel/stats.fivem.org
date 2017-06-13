@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="FiveM Stats collects usage data from the FiveM Master list and visualizes them">
     <meta name="keyword" content="GTA5,FiveM,Stats,Statistics,Servers,GTA5Multiplayer">
-    <link rel="shortcut icon" href="img/favicon.png">
+    <link rel="shortcut icon" href="{{ url('/img/favicon.png') }}">
 
     <title>@section('title')FiveM stats
     @show</title>

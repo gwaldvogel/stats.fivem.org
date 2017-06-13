@@ -21,3 +21,7 @@ Route::get('/serversByCountry', 'MainController@serversByCountry');
 Route::get('/playersByCountry', 'MainController@playersByCountry');
 
 Route::get('/server/{id}', 'ServerController@getServer');
+
+Route::get('/credits', function () {
+    return view('credits');
+});
