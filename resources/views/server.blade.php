@@ -29,7 +29,7 @@
                             <canvas id="card-player-chart" class="chart" height="70"></canvas>
                         </div>
                         <div class="card-footer p-x-1 p-y-h">
-                            <span>Last updated: {{ $server->updated_at }}</span>
+                            <span>Last updated: <span id="lastUpdated">{{ $server->updated_at->toIso8601String() }}</span></span>
                             <span class="pull-right">Current players: {{ $server->clients }}/{{ $server->max_clients }}</span>
                         </div>
                     </div>
@@ -40,6 +40,16 @@
         </div>
     </div>
 @endsection
+
+@push('additionalScripts')
+<script>
+    $(document).ready(function() {
+        var lastUpdated = $('#lastUpdated').html();
+        console.log($('#lastUpdated').html());
+        $('#lastUpdated').html(new Date(lastUpdated).toLocaleString());
+    });
+</script>
+@endpush
 
 @push('additionalScripts')
 <script>
