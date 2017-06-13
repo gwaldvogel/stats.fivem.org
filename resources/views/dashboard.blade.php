@@ -72,8 +72,13 @@
 <script>
     $.get('{{ url('/api/players/since/60') }}', function(data){
         $('#currentPlayerCount').html(data.playerCount[data.playerCount.length - 1]);
+        let datetime = [];
+        for(i = 0; i < data.datetime.length; ++i)
+        {
+            datetime.push(new Date(data.datetime[i]).toLocaleString());
+        }
         chartData = {
-            labels: data.datetime,
+            labels: datetime,
             datasets: [
                 {
                     label: 'Players online',
@@ -134,8 +139,13 @@
 <script>
     $.get('{{ url('/api/servers/since/60') }}', function(data){
         $('#currentServerCount').html(data.serverCount[data.serverCount.length - 1]);
+        let datetime = [];
+        for(i = 0; i < data.datetime.length; ++i)
+        {
+            datetime.push(new Date(data.datetime[i]).toLocaleString());
+        }
         chartData = {
-            labels: data.datetime,
+            labels: datetime,
             datasets: [
                 {
                     label: 'Servers online',
@@ -196,8 +206,13 @@
 @push('additionalScripts')
 <script>
     $.get('{{ url('/api/serversAndPlayers/since/24') }}', function(data){
+        let datetime = [];
+        for(i = 0; i < data.datetime.length; ++i)
+        {
+            datetime.push(new Date(data.datetime[i]).toLocaleString());
+        }
         chartData = {
-            labels: data.datetime,
+            labels: datetime,
             datasets: [
                 {
                     label: 'Servers online',

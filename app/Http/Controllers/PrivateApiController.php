@@ -16,14 +16,8 @@ class PrivateApiController extends Controller
             $out = [];
             $overallStatistics = OverallStatistics::where('updated_at', '>', Carbon::now()->subMinutes($ageInMinutes))->get();
 
-            if ($ageInMinutes == 60) {
-                $format = 'H:i:s';
-            } else {
-                $format = 'Y-m-d H:i:s';
-            }
-
             foreach ($overallStatistics as $statistic) {
-                $out['datetime'][] = $statistic->updated_at->format($format);
+                $out['datetime'][] = $statistic->updated_at->toIso8601String();
                 $out['playerCount'][] = $statistic->clients;
             }
 
@@ -39,7 +33,7 @@ class PrivateApiController extends Controller
             $out = [];
             $overallStatistics = OverallStatistics::where('updated_at', '>', Carbon::now()->subMinutes($ageInMinutes))->get();
             foreach ($overallStatistics as $statistic) {
-                $out['datetime'][] = $statistic->updated_at->format('Y-m-d H:i:s');
+                $out['datetime'][] = $statistic->updated_at->toIso8601String();
                 $out['serverCount'][] = $statistic->servers;
             }
 
@@ -55,9 +49,8 @@ class PrivateApiController extends Controller
             $out = [];
             $overallStatistics = OverallStatistics::where('updated_at', '>', Carbon::now()->subHours($ageInHours))->get();
 
-            $format = 'Y-m-d H:i:s';
             foreach ($overallStatistics as $statistic) {
-                $out['datetime'][] = $statistic->updated_at->format($format);
+                $out['datetime'][] = $statistic->updated_at->toIso8601String();
                 $out['playerCount'][] = $statistic->clients;
                 $out['serverCount'][] = $statistic->servers;
             }
