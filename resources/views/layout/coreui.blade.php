@@ -21,12 +21,12 @@
     @show</title>
 
     <!-- Icons -->
-    <link href="css/font-awesome.min.css" rel="stylesheet">
-    <link href="css/simple-line-icons.css" rel="stylesheet">
+    <link href="{{ url('css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ url('css/simple-line-icons.css') }}" rel="stylesheet">
 
     <!-- Main styles for this application -->
-    <link href="css/style.css" rel="stylesheet">
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <link href="{{ url('css/style.css') }}" rel="stylesheet">
+    <script src="{{ url('bower_components/jquery/dist/jquery.min.js') }}"></script>
 
     @stack('additionalHeadScripts')
 </head>
@@ -137,15 +137,15 @@
 </footer>
 
 <!-- Bootstrap and necessary plugins -->
-<script src="bower_components/tether/dist/js/tether.min.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="bower_components/pace/pace.min.js"></script>
+<script src="{{ url('bower_components/tether/dist/js/tether.min.js') }}"></script>
+<script src="{{ url('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ url('bower_components/pace/pace.min.js') }}"></script>
 
 <!-- Plugins and scripts required by all views -->
-<script src="bower_components/chart.js/dist/Chart.min.js"></script>
+<script src="{{ url('bower_components/chart.js/dist/Chart.min.js') }}"></script>
 
 <!-- GenesisUI main scripts -->
-<script src="js/app.js"></script>
+<script src="{{ url('js/app.js') }}"></script>
 
 @stack('additionalScripts')
 

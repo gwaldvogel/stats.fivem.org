@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Server;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
+use Vinkla\Hashids\Facades\Hashids;
 
 class CreateServerListCache extends Command
 {
@@ -45,6 +46,7 @@ class CreateServerListCache extends Command
 
         foreach ($servers as $server) {
             $outArray[] = [
+                'id' => Hashids::encode($server->id),
                 'name' => strlen($server->name) > 63 ? substr($server->name, 0, 60).'...' : $server->name,
                 'ipaddress' => $server->ip.':'.$server->port,
                 'lastUpdated' => $server->updated_at,

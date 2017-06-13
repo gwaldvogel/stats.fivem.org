@@ -19,4 +19,4 @@ Route::get('/serversAndPlayers/since/{ageInMinutes}', 'PrivateApiController@getS
 Route::get('/players/byCountry', 'PrivateApiController@getCountryPlayerCount');
 Route::get('/servers/byCountry', 'PrivateApiController@getCountryServerCount');
 
-Route::get('/server', 'PrivateApiController@getServers');
+Route::get('/server/history/{id}', 'PrivateApiController@getServerHistory');

@@ -30,7 +30,7 @@
                                     <td>@if(!empty($server['icon']))
                                             <img src="{{ url($server['icon']) }}" alt="" style="width: 48px; height: 48px;" />
                                         @endif</td>
-                                    <td>{{ $server['name'] }}</td>
+                                    <td><a href="{{ url('/server/' . $server['id']) }}">{!!  $server['name'] !!}</a></td>
                                     <td>{{ $server['ipaddress'] }}</td>
                                     <td>{{ $server['lastUpdated'] }}</td>
                                 </tr>

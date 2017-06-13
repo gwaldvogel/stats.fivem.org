@@ -19,3 +19,5 @@ Route::get('/serverlist', 'MainController@serverList');
 
 Route::get('/serversByCountry', 'MainController@serversByCountry');
 Route::get('/playersByCountry', 'MainController@playersByCountry');
+
+Route::get('/server/{id}', 'ServerController@getServer');

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Server;
 use Carbon\Carbon;
 use App\CountryStats;
 use App\OverallStatistics;
 use Illuminate\Support\Facades\Cache;
 use App\Console\Commands\ParseCountryStats;
+use Vinkla\Hashids\Facades\Hashids;
 
 class PrivateApiController extends Controller
 {
@@ -97,13 +99,26 @@ class PrivateApiController extends Controller
         return response()->json($countryStatsPlayers);
     }
 
-    public function getServers()
+    public function getServerHistory($id)
     {
-        $serversArray = [];
-        if (Cache::has('servers:array')) {
-            $serversArray = Cache::get('servers:array');
-        }
+        $id = Hashids::decode($id)[0];
 
-        return response()->json($serversArray);
+        $serverHistory = Cache::remember('api:server:'.$id.':history', 30, function () use ($id) {
+            $server = Server::findOrFail($id);
+            $out = [];
+            $serverHistories = $server->histories()->where('created_at', '>', Carbon::now()->subHours(24))->get();
+            foreach($serverHistories as $history)
+            {
+                $out['datetime'][] = $history->created_at->toIso8601String();
+                $out['playerCount'][] = $history->clients;
+            }
+
+            $out['datetime'][] = $server->updated_at->toIso8601String();
+            $out['playerCount'][] = $server->clients;
+
+            return $out;
+        });
+
+        return response()->json($serverHistory);
     }
 }
