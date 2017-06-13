@@ -6,9 +6,9 @@ use App\Server;
 use Carbon\Carbon;
 use App\CountryStats;
 use App\OverallStatistics;
+use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Support\Facades\Cache;
 use App\Console\Commands\ParseCountryStats;
-use Vinkla\Hashids\Facades\Hashids;
 
 class PrivateApiController extends Controller
 {
@@ -107,8 +107,7 @@ class PrivateApiController extends Controller
             $server = Server::findOrFail($id);
             $out = [];
             $serverHistories = $server->histories()->where('created_at', '>', Carbon::now()->subHours(24))->get();
-            foreach($serverHistories as $history)
-            {
+            foreach ($serverHistories as $history) {
                 $out['datetime'][] = $history->created_at->toIso8601String();
                 $out['playerCount'][] = $history->clients;
             }
