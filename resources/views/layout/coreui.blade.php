@@ -49,9 +49,30 @@
         </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item d-md-down-none">
+        <!--<li class="nav-item d-md-down-none">
             <a class="nav-link" href="#"onclick="window.location.reload()"><i class="icon-refresh"></i></a>
-        </li>
+        </li>-->
+        @if(Auth::check())
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{ Auth::user()->avatar }}" class="img-avatar" alt="">
+                    <span class="hidden-md-down">{{ Auth::user()->nickname }}</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-header text-xs-center">
+                        <strong>Noting implemented yet, sorry.</strong>
+                    </div>
+                    <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Logout</a>
+                </div>
+            </li>
+            <li class="nav-item d-md-down-none">
+                <a class="nav-link" href="{{ url('/logout') }}" ><i class="icon-logout"></i></a>
+            </li>
+        @else
+            <li class="nav-item d-md-down-none">
+                <a class="nav-link" href="{{ url('/login') }}"><i class="icon-login"></i></a>
+            </li>
+        @endif
     </ul>
 </header>
 

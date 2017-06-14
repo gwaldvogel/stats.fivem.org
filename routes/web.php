@@ -25,3 +25,7 @@ Route::get('/server/{id}', 'ServerController@getServer');
 Route::get('/credits', function () {
     return view('credits');
 });
+
+Route::get('/login', 'LoginController@redirectToProvider');
+Route::get('/logout', 'LoginController@logout');
+Route::get('/login/callback', 'LoginController@handleProviderCallback');

@@ -170,6 +170,7 @@ return [
 
         \Torann\GeoIP\GeoIPServiceProvider::class,
         Vinkla\Hashids\HashidsServiceProvider::class,
+        \SocialiteProviders\Manager\ServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -231,7 +232,7 @@ return [
 
         'GeoIP' => \Torann\GeoIP\Facades\GeoIP::class,
         'Hashids' => Vinkla\Hashids\Facades\Hashids::class,
-
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 
 ];
