@@ -3,7 +3,7 @@
     FiveM Servers by country
 @endsection
 @push('additionalHeadScripts')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jqvmap.min.css" />
+<link rel="stylesheet" href="{{ url('/css/jqvmap.min.css') }}" />
 @endpush
 @section('breadcrumbs')
     <li class="breadcrumb-item">Geographical Statistics</li>
@@ -18,7 +18,7 @@
                         <i class="fa fa-server"></i>Servers by country<br>
                     </div>
                     <div class="card-block">
-                        <div id="serverLocations" style="width: 100%; height: 100%;"></div>
+                        <div id="serverLocations" style="width: 100%; height: 800px;"></div>
                     </div>
                 </div>
             </div>
@@ -27,20 +27,32 @@
 @endsection
 
 @push('additionalScripts')
-<script src="{{ url('/js/jquery-jvectormap-2.0.3.min.js') }}"></script>
-<script src="{{ url('/js/jquery-jvectormap-world-mill.js') }}"></script>
+<script src="{{ url('/js/jquery.vmap.js') }}"></script>
+<script src="{{ url('/js/jquery.vmap.world.js') }}"></script>
 @endpush
 @push('additionalScripts')
 <script>
+    var g_apiData = {};
     $.get('{{ url('/api/servers/byCountry') }}', function(apiData){
-        jQuery('#serversLocations').vectorMap({
-            map: 'world_mill',
-            series: {
-                regions: [{
-                    scale: ['#ffff00', '#ff0000'],
-                    values: apiData,
-                    normalizeFunction: 'polynomial'
-                }]
+        g_apiData = apiData;
+        jQuery('#serverLocations').vectorMap({
+            map: 'world_en',
+            scale: ['#ffff00', '#ff0000'],
+            values: apiData,
+            normalizeFunction: 'polynomial',
+            showTooltip: true,
+            backgroundColor: null,
+            hoverColor: false,
+            onLabelShow: function(event, label, code)
+            {
+                if(g_apiData[code] === undefined)
+                    event.preventDefault();
+                else
+                    label.text(label.text() + ": " + g_apiData[code] + " Server(s)");
+            },
+            onRegionClick: function(event, code, region)
+            {
+                event.preventDefault();
             }
         });
     });

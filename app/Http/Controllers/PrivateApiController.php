@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\PlayerCountry;
 use App\Server;
+use App\ServerCountry;
 use Carbon\Carbon;
 use App\CountryStats;
 use App\OverallStatistics;
+use Illuminate\Support\Facades\DB;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Support\Facades\Cache;
 use App\Console\Commands\ParseCountryStats;
@@ -14,9 +17,10 @@ class PrivateApiController extends Controller
 {
     public function getPlayerCounts($ageInMinutes = 60)
     {
-        $players = Cache::remember('api:playercount:'.$ageInMinutes, 5, function () use ($ageInMinutes) {
+        $players = Cache::remember('api:playercount:' . $ageInMinutes, 5, function () use ($ageInMinutes) {
             $out = [];
-            $overallStatistics = OverallStatistics::where('updated_at', '>', Carbon::now()->subMinutes($ageInMinutes))->get();
+            $overallStatistics = OverallStatistics::where('updated_at', '>',
+                Carbon::now()->subMinutes($ageInMinutes))->get();
 
             foreach ($overallStatistics as $statistic) {
                 $out['datetime'][] = $statistic->updated_at->toIso8601String();
@@ -31,9 +35,10 @@ class PrivateApiController extends Controller
 
     public function getServerCounts($ageInMinutes = 60)
     {
-        $servers = Cache::remember('api:servercount:'.$ageInMinutes, 5, function () use ($ageInMinutes) {
+        $servers = Cache::remember('api:servercount:' . $ageInMinutes, 5, function () use ($ageInMinutes) {
             $out = [];
-            $overallStatistics = OverallStatistics::where('updated_at', '>', Carbon::now()->subMinutes($ageInMinutes))->get();
+            $overallStatistics = OverallStatistics::where('updated_at', '>',
+                Carbon::now()->subMinutes($ageInMinutes))->get();
             foreach ($overallStatistics as $statistic) {
                 $out['datetime'][] = $statistic->updated_at->toIso8601String();
                 $out['serverCount'][] = $statistic->servers;
@@ -47,9 +52,10 @@ class PrivateApiController extends Controller
 
     public function getServerAndPlayerCounts($ageInHours = 24)
     {
-        $final = Cache::remember('api:playerservercount:hours:'.$ageInHours, 5, function () use ($ageInHours) {
+        $final = Cache::remember('api:playerservercount:hours:' . $ageInHours, 5, function () use ($ageInHours) {
             $out = [];
-            $overallStatistics = OverallStatistics::where('updated_at', '>', Carbon::now()->subHours($ageInHours))->get();
+            $overallStatistics = OverallStatistics::where('updated_at', '>',
+                Carbon::now()->subHours($ageInHours))->get();
 
             foreach ($overallStatistics as $statistic) {
                 $out['datetime'][] = $statistic->updated_at->toIso8601String();
@@ -65,14 +71,12 @@ class PrivateApiController extends Controller
 
     public function getCountryServerCount()
     {
-        $countryStatsServer = Cache::remember('api:countrystatsserver', 5, function () {
-            $stats = CountryStats::where('servers', '=', true)
-                ->orderBy('updated_at', 'desc')
-                ->first();
-
+        $countryStatsServer = Cache::remember('api:countrystats:server', 5, function () {
+            $overallStats = DB::table('overall_statistics')->orderBy('created_at', 'DESC')->first();
+            $serverCountries = ServerCountry::where('overall_statistic_id', $overallStats->id)->get();
             $out = [];
-            foreach ($stats->entries as $entry) {
-                $out[ParseCountryStats::convertCountryCodeBack($entry->countryCode)] = $entry->value;
+            foreach ($serverCountries as $country) {
+                $out[strtolower($country->country_code)] = $country->servers;
             }
 
             return $out;
@@ -83,14 +87,12 @@ class PrivateApiController extends Controller
 
     public function getCountryPlayerCount()
     {
-        $countryStatsPlayers = Cache::remember('api:countrystatsplayer', 5, function () {
-            $stats = CountryStats::where('servers', '=', false)
-                ->orderBy('updated_at', 'desc')
-                ->first();
-
+        $countryStatsPlayers = Cache::remember('api:countrystats:player', 5, function () {
+            $overallStats = DB::table('overall_statistics')->orderBy('created_at', 'DESC')->first();
+            $playerCountries = PlayerCountry::where('overall_statistic_id', $overallStats->id)->get();
             $out = [];
-            foreach ($stats->entries as $entry) {
-                $out[ParseCountryStats::convertCountryCodeBack($entry->countryCode)] = $entry->value;
+            foreach ($playerCountries as $country) {
+                $out[strtolower($country->country_code)] = $country->clients;
             }
 
             return $out;
@@ -103,7 +105,7 @@ class PrivateApiController extends Controller
     {
         $id = Hashids::decode($id)[0];
 
-        $serverHistory = Cache::remember('api:server:'.$id.':history', 30, function () use ($id) {
+        $serverHistory = Cache::remember('api:server:' . $id . ':history', 30, function () use ($id) {
             $server = Server::findOrFail($id);
             $out = [];
             $serverHistories = $server->histories()->where('created_at', '>', Carbon::now()->subHours(24))->get();

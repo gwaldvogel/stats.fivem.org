@@ -26,33 +26,12 @@
 
     <!-- Main styles for this application -->
     <link href="{{ url('css/style.css') }}" rel="stylesheet">
+    @section('jquery')
     <script src="{{ url('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    @show
 
     @stack('additionalHeadScripts')
 </head>
-
-<!-- BODY options, add following classes to body to change options
-
-// Header options
-1. '.header-fixed'					- Fixed Header
-
-// Sidebar options
-1. '.sidebar-fixed'					- Fixed Sidebar
-2. '.sidebar-hidden'				- Hidden Sidebar
-3. '.sidebar-off-canvas'		- Off Canvas Sidebar
-4. '.sidebar-minimized'			- Minimized Sidebar (Only icons)
-5. '.sidebar-compact'			  - Compact Sidebar
-
-// Aside options
-1. '.aside-menu-fixed'			- Fixed Aside Menu
-2. '.aside-menu-hidden'			- Hidden Aside Menu
-3. '.aside-menu-off-canvas'	- Off Canvas Aside Menu
-
-// Footer options
-1. '.footer-fixed'						- Fixed footer
-
--->
-
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
 <header class="app-header navbar">
     <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button">☰</button>
@@ -89,15 +68,15 @@
                     <a class="nav-link" href="{{ url('/serverlist') }}"><i class="icon-list"></i> Server list</a>
                 </li>
 
-                <!--<li class="nav-title">
+                <li class="nav-title">
                     Geographical Statistics
                 </li>
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link" href="{{ url('/serversByCountry') }}"><i class="icon-game-controller"></i> Servers by country</a>
                 </li>
                 <li class="nav-item nav-dropdown">
-                    <a class="nav-link" href="{{ url('/playersByCountyr') }}"><i class="icon-people"></i> Players by country</a>
-                </li>-->
+                    <a class="nav-link" href="{{ url('/playersByCountry') }}"><i class="icon-people"></i> Players by country</a>
+                </li>
             </ul>
         </nav>
         @show
