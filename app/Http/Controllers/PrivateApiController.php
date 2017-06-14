@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\PlayerCountry;
 use App\Server;
-use App\ServerCountry;
 use Carbon\Carbon;
 use App\CountryStats;
+use App\PlayerCountry;
+use App\ServerCountry;
 use App\OverallStatistics;
 use Illuminate\Support\Facades\DB;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Support\Facades\Cache;
-use App\Console\Commands\ParseCountryStats;
 
 class PrivateApiController extends Controller
 {
     public function getPlayerCounts($ageInMinutes = 60)
     {
-        $players = Cache::remember('api:playercount:' . $ageInMinutes, 5, function () use ($ageInMinutes) {
+        $players = Cache::remember('api:playercount:'.$ageInMinutes, 5, function () use ($ageInMinutes) {
             $out = [];
             $overallStatistics = OverallStatistics::where('updated_at', '>',
                 Carbon::now()->subMinutes($ageInMinutes))->get();
@@ -35,7 +34,7 @@ class PrivateApiController extends Controller
 
     public function getServerCounts($ageInMinutes = 60)
     {
-        $servers = Cache::remember('api:servercount:' . $ageInMinutes, 5, function () use ($ageInMinutes) {
+        $servers = Cache::remember('api:servercount:'.$ageInMinutes, 5, function () use ($ageInMinutes) {
             $out = [];
             $overallStatistics = OverallStatistics::where('updated_at', '>',
                 Carbon::now()->subMinutes($ageInMinutes))->get();
@@ -52,7 +51,7 @@ class PrivateApiController extends Controller
 
     public function getServerAndPlayerCounts($ageInHours = 24)
     {
-        $final = Cache::remember('api:playerservercount:hours:' . $ageInHours, 5, function () use ($ageInHours) {
+        $final = Cache::remember('api:playerservercount:hours:'.$ageInHours, 5, function () use ($ageInHours) {
             $out = [];
             $overallStatistics = OverallStatistics::where('updated_at', '>',
                 Carbon::now()->subHours($ageInHours))->get();
@@ -105,7 +104,7 @@ class PrivateApiController extends Controller
     {
         $id = Hashids::decode($id)[0];
 
-        $serverHistory = Cache::remember('api:server:' . $id . ':history', 30, function () use ($id) {
+        $serverHistory = Cache::remember('api:server:'.$id.':history', 30, function () use ($id) {
             $server = Server::findOrFail($id);
             $out = [];
             $serverHistories = $server->histories()->where('created_at', '>', Carbon::now()->subHours(24))->get();
