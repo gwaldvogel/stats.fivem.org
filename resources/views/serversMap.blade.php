@@ -37,7 +37,7 @@
         g_apiData = apiData;
         jQuery('#serverLocations').vectorMap({
             map: 'world_en',
-            scale: ['#ffff00', '#ff0000'],
+            scaleColors: ['#ffffff', '#20a8d8'],
             values: apiData,
             normalizeFunction: 'polynomial',
             showTooltip: true,
