@@ -13,8 +13,8 @@
                             <h4 class="mb-0" id="currentPlayerCount"></h4>
                             <p>Players online in the last hour</p>
                         </div>
-                        <div class="chart-wrapper px-3" style="height:70px;">
-                            <canvas id="card-player-chart" class="chart" height="70"></canvas>
+                        <div class="chart-wrapper px-3" style="height:90px;">
+                            <canvas id="card-player-chart" class="chart" height="90"></canvas>
                         </div>
                     </div>
                 </div>
@@ -26,8 +26,8 @@
                             <h4 class="mb-0" id="currentServerCount"></h4>
                             <p>Servers online in the last hour</p>
                         </div>
-                        <div class="chart-wrapper px-3" style="height:70px;">
-                            <canvas id="card-server-chart" class="chart" height="70"></canvas>
+                        <div class="chart-wrapper px-3" style="height:90px;">
+                            <canvas id="card-server-chart" class="chart" height="90"></canvas>
                         </div>
                     </div>
                 </div>
@@ -92,6 +92,9 @@
             maintainAspectRatio: false,
             legend: {
                 display: false
+            },
+            tooltip: {
+                caretSize: 0
             },
             scales: {
                 xAxes: [{
@@ -159,6 +162,9 @@
             maintainAspectRatio: false,
             legend: {
                 display: false
+            },
+            tooltip: {
+                caretSize: 0
             },
             scales: {
                 xAxes: [{
@@ -232,6 +238,9 @@
             maintainAspectRatio: false,
             legend: {
                 display: false
+            },
+            tooltip: {
+                caretSize: 0
             },
             scales: {
                 xAxes: [{
