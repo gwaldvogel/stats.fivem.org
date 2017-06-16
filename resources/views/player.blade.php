@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            @if($user->id == Auth::user()->id)
+            @if(Auth::user() && $user->id == Auth::user()->id)
                 <div class="card">
                     <div class="card-header">
                         <div class="row">

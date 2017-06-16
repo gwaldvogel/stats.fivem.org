@@ -12,7 +12,7 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect('/dashboard');
+        return redirect()->back();
     }
 
     /**
