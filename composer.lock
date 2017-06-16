@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6d217e5244a5f6dbca92fa44e3931444",
+    "content-hash": "404259940612a99162e34dbe1baf58b2",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -2751,6 +2751,43 @@
                 "maxmind"
             ],
             "time": "2017-01-26T17:27:25+00:00"
+        },
+        {
+            "name": "tremby/laravel-queue-monitor",
+            "version": "2.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tremby/laravel-queue-monitor.git",
+                "reference": "8bb99ff0f2d277541ac339ed8a6b023a8e1c59b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tremby/laravel-queue-monitor/zipball/8bb99ff0f2d277541ac339ed8a6b023a8e1c59b3",
+                "reference": "8bb99ff0f2d277541ac339ed8a6b023a8e1c59b3",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.1",
+                "php": ">=5.6.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Tremby\\QueueMonitor\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bart Nagel",
+                    "email": "bart@tremby.net"
+                }
+            ],
+            "description": "Laravel queue monitoring tools",
+            "time": "2017-03-29T02:45:22+00:00"
         },
         {
             "name": "vinkla/hashids",

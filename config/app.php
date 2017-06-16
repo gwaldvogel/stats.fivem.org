@@ -172,6 +172,8 @@ return [
         Vinkla\Hashids\HashidsServiceProvider::class,
         \SocialiteProviders\Manager\ServiceProvider::class,
 
+        Tremby\QueueMonitor\ServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
