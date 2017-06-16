@@ -13,7 +13,6 @@
         "predis/predis": "^1.1",
         "socialiteproviders/steam": "^1.0",
         "torann/geoip": "^1.0",
-        "tremby/laravel-queue-monitor": "^2.3",
         "vinkla/hashids": "^3.1"
     },
     "require-dev": {

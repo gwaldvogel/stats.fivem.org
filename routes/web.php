@@ -40,7 +40,3 @@ Route::post('/search/player', 'PlayerController@searchPlayer');
 Route::get('/credits', function () {
     return view('credits');
 });
-
-Route::get('queue-monitor', function () {
-    return Response::view('queue-monitor::status-page');
-});
