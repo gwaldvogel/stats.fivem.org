@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Server;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Support\Facades\Cache;
 
 class ServerController extends Controller
 {
@@ -36,21 +36,21 @@ class ServerController extends Controller
 
     public function searchServer(Request $request)
     {
-        if(strlen($request->input('search')) < 3)
-        {
+        if (strlen($request->input('search')) < 3) {
             $request->session()->flash('alert-danger', 'Your search string has to have at least 3 digits!');
+
             return redirect('/search/server');
         }
 
         $servers = Server::where('ip', $request->input('search'))->get();
-        if($servers->isEmpty())
+        if ($servers->isEmpty()) {
             $servers = Server::where('name', 'like', '%'.$request->input('search').'%')->get();
-
-        if($servers->count() > 1)
-        {
-            return view('searchserver', ['servers' => $servers]);
         }
-        else
+
+        if ($servers->count() > 1) {
+            return view('searchserver', ['servers' => $servers]);
+        } else {
             return redirect('/server/'.Hashids::encode($servers[0]->id));
+        }
     }
 }

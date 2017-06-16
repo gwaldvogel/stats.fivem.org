@@ -35,7 +35,6 @@ class User extends Model implements AuthenticatableContract
      */
     public function getAuthPassword()
     {
-        return null;
     }
 
     /**
@@ -45,7 +44,6 @@ class User extends Model implements AuthenticatableContract
      */
     public function getRememberToken()
     {
-        return null;
     }
 
     /**

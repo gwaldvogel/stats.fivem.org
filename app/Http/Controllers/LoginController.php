@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -12,6 +11,7 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
+
         return redirect('/dashboard');
     }
 
@@ -36,6 +36,7 @@ class LoginController extends Controller
             $user = Socialite::driver('steam')->user();
             $authUser = $this->findOrCreateUser($user);
             Auth::login($authUser, true);
+
             return redirect('/dashboard');
         } catch (Exception $e) {
             return redirect('/login');

@@ -11,7 +11,6 @@
 |
 */
 
-
 Route::get('/', function () {
     return redirect('/dashboard');
 });
@@ -37,7 +36,6 @@ Route::get('/playerlist', 'PlayerController@playerlist');
 Route::get('/player/{steamdid}/{toggle?}', 'PlayerController@getPlayer');
 Route::get('/search/player', 'PlayerController@searchPlayerView');
 Route::post('/search/player', 'PlayerController@searchPlayer');
-
 
 Route::get('/credits', function () {
     return view('credits');
