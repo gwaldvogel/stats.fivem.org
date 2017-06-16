@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Server;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Support\Facades\Cache;
 
@@ -42,7 +43,7 @@ class CreateServerListCache extends Command
     {
         $start = microtime(true);
         $outArray = [];
-        $servers = Server::all();
+        $servers = DB::table('servers')->orderBy('clients', 'DESC')->get();
 
         foreach ($servers as $server) {
             $outArray[] = [

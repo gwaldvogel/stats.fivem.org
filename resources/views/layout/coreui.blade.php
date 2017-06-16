@@ -47,6 +47,9 @@
         <li class="nav-item px-3">
             <a class="nav-link" href="{{ url('/serverlist') }}">Servers</a>
         </li>
+        <li class="nav-item px-3">
+            <a class="nav-link" href="{{ url('/credits') }}">Credits</a>
+        </li>
     </ul>
     <ul class="nav navbar-nav ml-auto">
         <!--<li class="nav-item d-md-down-none">
@@ -59,9 +62,7 @@
                     <span class="hidden-md-down">{{ Auth::user()->nickname }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <div class="dropdown-header text-xs-center">
-                        <strong>Noting implemented yet, sorry.</strong>
-                    </div>
+                    <a class="dropdown-item" href="{{ url('player/'.Auth::user()->steam_id) }}"><i class="fa fa-user"></i> My Profile</a>
                     <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Logout</a>
                 </div>
             </li>
@@ -85,8 +86,25 @@
                     <a class="nav-link" href="{{ url('/dashboard') }}"><i class="icon-speedometer"></i> Dashboard</a>
                 </li>
 
+                <li class="nav-title">
+                    Servers
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/serverlist') }}"><i class="icon-list"></i> Server list</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('/search/server') }}"><i class="icon-magnifier"></i> Search server</a>
+                </li>
+
+                <li class="nav-title">
+                    Players
+                </li>
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link" href="{{ url('/playerlist') }}"><i class="icon-people"></i> Player list</a>
+                </li>
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link" href="{{ url('/search/player') }}"><i class="icon-magnifier"></i> Search players</a>
                 </li>
 
                 <li class="nav-title">
@@ -123,7 +141,7 @@
                 </div>
             </li>-->
         </ol>
-
+        @include('shared.alerts')
         @section('content')
         Not yet implemented.
         @show
@@ -146,6 +164,13 @@
 
 <!-- GenesisUI main scripts -->
 <script src="{{ url('js/app.js') }}"></script>
+
+<!-- DateTime conversion -->
+<script>
+    $('.iso6081-datetime').each(function() {
+        $(this).html(new Date($(this).html()).toLocaleString());
+    });
+</script>
 
 @stack('additionalScripts')
 

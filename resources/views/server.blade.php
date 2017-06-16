@@ -19,9 +19,13 @@
                             <div class="row">
                                 <div>
                                     <div class="card float-left" style="margin: 0 10px;">
-                                        <img src="{{ url('/server_icons/'.$server->icon) }}" alt="" style="height: 48px; margin: 10px;" />
+                                        @if($server->icon)
+                                            <img src="{{ url('/server_icons/'.$server->icon) }}" alt="" style="height: 48px; margin: 10px;" />
+                                        @else
+                                            <img src="{{ url('/server_icons/default.png') }}" alt="" style="height: 48px; margin: 10px;" />
+                                        @endif
                                     </div>
-                                    <h4>{{ $server->name }}</h4>
+                                    <h4 style="word-break: break-all;">{{ $server->name }}</h4>
                                 </div>
                             </div>
                         </div>

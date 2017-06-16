@@ -68,6 +68,13 @@ class UpdateServerStatistics implements ShouldQueue
             }
         }
 
+        foreach($this->serverData->Data->players as $player)
+        {
+            if(substr($player->identifiers[0], 0, 5) == 'steam') {
+                dispatch(new UpdatePlayerStatistics($player, $server->id));
+            }
+        }
+
         $server->name = $this->removeColorsFromServerName($this->serverData->Data->hostname);
         $server->gametype = $this->serverData->Data->gametype;
         $server->mapname = $this->serverData->Data->mapname;

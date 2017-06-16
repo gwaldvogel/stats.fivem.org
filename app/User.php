@@ -68,4 +68,9 @@ class User extends Model implements AuthenticatableContract
     {
         return 'remember_token';
     }
+
+    public function playerStatistics()
+    {
+        return $this->hasMany('App\PlayerStatistic');
+    }
 }

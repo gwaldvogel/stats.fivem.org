@@ -51,7 +51,7 @@ class LoginController extends Controller
         return User::create([
             'nickname' => $steamUser->nickname,
             'steam_id' => $steamUser->id,
-            'avatar' => $steamUser->avatar
+            'avatar' => $steamUser->user['avatar'],
         ]);
     }
 }

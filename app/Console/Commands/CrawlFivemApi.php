@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\UpdatePlayerStatistics;
 use Carbon\Carbon;
 use App\OverallStatistics;
 use Illuminate\Console\Command;

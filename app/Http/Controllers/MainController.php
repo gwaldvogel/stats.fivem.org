@@ -33,18 +33,6 @@ class MainController extends Controller
             'CountryStatsPlayers' => $countryStatsPlayers->entries, ]);
     }
 
-    public function serverList()
-    {
-        $serversArray = [];
-        if (Cache::has('servers:array')) {
-            $serversArray = Cache::get('servers:array');
-        }
-
-        return view('serverList', [
-            'servers' => $serversArray,
-        ]);
-    }
-
     public function dashboard()
     {
         return view('dashboard');
