@@ -27,7 +27,7 @@ class ModifyUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropUnique('steam_id');
+            $table->dropUnique(['steam_id']);
             $table->dropColumn('hidden');
         });
     }
