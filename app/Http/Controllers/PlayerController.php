@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Server;
 use App\User;
+use App\Server;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class PlayerController extends Controller
 {
@@ -19,34 +18,31 @@ class PlayerController extends Controller
     {
         if (strlen($request->input('search')) < 3) {
             $request->session()->flash('alert-danger', 'Your search string has to have at least 3 digits!');
+
             return redirect('/search/player');
         }
 
         $users = User::where('steam_id', $request->input('search'))->get();
         if ($users->isEmpty()) {
-            $users = User::where('nickname', 'like', '%' . $request->input('search') . '%')->get();
+            $users = User::where('nickname', 'like', '%'.$request->input('search').'%')->get();
         }
 
         if ($users->count() > 1) {
             return view('searchplayer', ['users' => $users]);
         } else {
-            return redirect('/player/' . $users[0]->steam_id);
+            return redirect('/player/'.$users[0]->steam_id);
         }
     }
 
     public function getPlayer($steamId, $toggle = false)
     {
         $user = User::where('steam_id', $steamId)->first();
-        if (!$user) { // user does not exist
+        if (! $user) { // user does not exist
             abort(404);
-        }
-        else if($toggle != false && $user->id == Auth::user()->id) // toggling hidden status
-        {
+        } elseif ($toggle != false && $user->id == Auth::user()->id) { // toggling hidden status
             $user->hidden = $user->hidden ? false : true;
             $user->save();
-        }
-        else if($user->hidden && $user->id != Auth::user()->id) // hidden and not himself
-        {
+        } elseif ($user->hidden && $user->id != Auth::user()->id) { // hidden and not himself
             abort(403);
         }
 
@@ -110,6 +106,7 @@ class PlayerController extends Controller
     public function playerlist()
     {
         $users = User::where('hidden', false)->paginate(25);
+
         return view('playerlist', ['users' => $users]);
     }
 }

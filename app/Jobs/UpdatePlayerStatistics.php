@@ -2,9 +2,9 @@
 
 namespace App\Jobs;
 
-use App\PlayerStatistic;
 use App\User;
 use GuzzleHttp\Client;
+use App\PlayerStatistic;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -40,15 +40,14 @@ class UpdatePlayerStatistics implements ShouldQueue
         $name = $this->player->name;
         $ping = $this->player->ping;
         $user = User::where('steam_id', $steam_id)->first();
-        if(!$user)
-        {
+        if (! $user) {
             try {
                 $client = new Client([
                     'base_uri' => 'http://api.steampowered.com',
                     'timeout' => 3.0,
                 ]);
 
-                $result = $client->request('GET', '/ISteamUser/GetPlayerSummaries/v0002/?key=' . env('STEAM_KEY') . '&steamids=' . $steam_id);
+                $result = $client->request('GET', '/ISteamUser/GetPlayerSummaries/v0002/?key='.env('STEAM_KEY').'&steamids='.$steam_id);
                 $result = json_decode($result->getBody());
 
                 if (isset($result->response) && array_key_exists(0, $result->response->players)) {
@@ -57,9 +56,7 @@ class UpdatePlayerStatistics implements ShouldQueue
                     $user->avatar = $result->response->players[0]->avatar;
                     $user->steam_id = $steam_id;
                     $user->save();
-                }
-                else
-                {
+                } else {
                     return;
                 }
             } catch (RequestException $e) {

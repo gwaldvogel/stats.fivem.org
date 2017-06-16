@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Server;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Vinkla\Hashids\Facades\Hashids;
