@@ -20,6 +20,8 @@
     <title>@section('title')FiveM stats
     @show</title>
 
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+
     <!-- Icons -->
     <link href="{{ url('css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ url('css/simple-line-icons.css') }}" rel="stylesheet">
@@ -153,6 +155,34 @@
     Version:  1.0.0-alpha-{{ env('GIT_SHORTHASH') }}
     <span class="float-right"> Powered by <a href="http://coreui.io">CoreUI</a></span>
 </footer>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-100448168-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<script>
+    window.addEventListener("load", function(){
+        window.cookieconsent.initialise({
+            "palette": {
+                "popup": {
+                    "background": "#eaf7f7",
+                    "text": "#5c7291"
+                },
+                "button": {
+                    "background": "#56cbdb",
+                    "text": "#ffffff"
+                }
+            },
+            "theme": "edgeless"
+        })});
+</script>
 
 <!-- Bootstrap and necessary plugins -->
 <script src="{{ url('bower_components/tether/dist/js/tether.min.js') }}"></script>
