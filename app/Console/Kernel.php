@@ -41,7 +41,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('crawl')->everyFiveMinutes();
         $schedule->command('crawl:icons')->twiceDaily();
-        $schedule->command('cache:serverlist')->everyThirtyMinutes();
+        $schedule->command('cache:serverlist')->everyFiveMinutes();
         $schedule->command('cache:cleanup:servericons')->daily();
     }
 
