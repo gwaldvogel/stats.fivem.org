@@ -51,6 +51,10 @@ class CreateServerListCache extends Command
                 'ipaddress' => $server->ip.':'.$server->port,
                 'lastUpdated' => $server->updated_at,
                 'icon' => empty($server->icon) ? null : '/server_icons/'.$server->icon,
+                'countryCode' => $server->country_code,
+                'country' => $server->country,
+                'clients' => $server->clients,
+                'maxClients' => $server->max_clients,
             ];
         }
         Cache::put('servers:array', $outArray, 30);

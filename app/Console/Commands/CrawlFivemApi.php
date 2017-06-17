@@ -44,7 +44,7 @@ class CrawlFivemApi extends Command
     {
         $start = microtime(true);
         $this->info('Fetching data from API');
-        $apiData = file_get_contents('http://runtime.fivem.net/servers');
+        $apiData = file_get_contents('http://runtime.fivem.net/api/servers/');
         $apiData = json_decode($apiData);
         $datetime = Carbon::now();
         $this->info('Data received. Processing...');

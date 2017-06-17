@@ -20,6 +20,7 @@
                             <tr>
                                 <th>Icon</th>
                                 <th>Server Name</th>
+                                <th>Players online</th>
                                 <th>IP adress</th>
                                 <th>Last updated</th>
                             </tr>
@@ -31,12 +32,14 @@
                                             <img src="{{ url($server['icon']) }}" alt="" style="width: 48px; height: 48px;" />
                                         @endif</td>
                                     <td><a href="{{ url('/server/' . $server['id']) }}">{!!  $server['name'] !!}</a></td>
-                                    <td>{{ $server['ipaddress'] }}</td>
+                                    <td>{{ $server['clients'] }}</td>
+                                    <td><img src="{{ url('img/countries/'.$server['countryCode'].'.png') }}" alt="{{ $server['country'] }}" /> {{ $server['ipaddress'] }}</td>
                                     <td>{{ $server['lastUpdated'] }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
+                        {{ $servers->links('vendor.pagination.bootstrap-4') }}
                     </div>
                 </div>
             </div>

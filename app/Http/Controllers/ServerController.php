@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Server;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Vinkla\Hashids\Facades\Hashids;
 use Illuminate\Support\Facades\Cache;
 
@@ -17,7 +20,7 @@ class ServerController extends Controller
         }
 
         return view('serverList', [
-            'servers' => $serversArray,
+            'servers' => $this->paginate($serversArray, 25),
         ]);
     }
 
@@ -52,5 +55,19 @@ class ServerController extends Controller
         } else {
             return redirect('/server/'.Hashids::encode($servers[0]->id));
         }
+    }
+
+    protected function paginate($items, $perPage)
+    {
+        if(is_array($items)){
+            $items = collect($items);
+        }
+
+        return new LengthAwarePaginator(
+            $items->forPage(Paginator::resolveCurrentPage() , $perPage),
+            $items->count(), $perPage,
+            Paginator::resolveCurrentPage(),
+            ['path' => Paginator::resolveCurrentPath()]
+        );
     }
 }
