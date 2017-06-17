@@ -33,7 +33,7 @@
                                         @endif</td>
                                     <td><a href="{{ url('/server/' . $server['id']) }}">{!!  $server['name'] !!}</a></td>
                                     <td>{{ $server['clients'] }}</td>
-                                    <td><img src="{{ url('img/countries/'.$server['countryCode'].'.png') }}" alt="{{ $server['country'] }}" /> {{ $server['ipaddress'] }}</td>
+                                    <td><img src="{{ url('img/countries/'.strtolower($server['countryCode']).'.png') }}" alt="{{ $server['country'] }}" /> {{ $server['ipaddress'] }}</td>
                                     <td>{{ $server['lastUpdated'] }}</td>
                                 </tr>
                             @endforeach
