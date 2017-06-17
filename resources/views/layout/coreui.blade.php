@@ -103,7 +103,7 @@
                     Players
                 </li>
                 <li class="nav-item nav-dropdown">
-                    <a class="nav-link" href="{{ url('/playerlist') }}"><i class="icon-people"></i> Player list</a>
+                    <a class="nav-link" href="{{ url('/playerlist') }}"><i class="icon-people"></i> Player list <span class="badge badge-info">BETA</span></a>
                 </li>
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link" href="{{ url('/search/player') }}"><i class="icon-magnifier"></i> Search players</a>
@@ -118,6 +118,14 @@
                 <li class="nav-item nav-dropdown">
                     <a class="nav-link" href="{{ url('/playersByCountry') }}"><i class="icon-people"></i> Players by country</a>
                 </li>
+                @if(Auth::user() && Auth::user()->admin)
+                <li class="nav-title">
+                    Admin
+                </li>
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link" href="{{ url('/admin/crawlStatus') }}"><i class="icon-game-controller"></i> Crawl status</a>
+                </li>
+                @endif
             </ul>
         </nav>
         @show

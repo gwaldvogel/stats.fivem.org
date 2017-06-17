@@ -36,7 +36,7 @@
                                     @endforeach
                                     </tbody>
                                 </table>
-                                {{ $users->links('vendor.pagination.simple-bootstrap-4') }}
+                                {{ $users->links('vendor.pagination.bootstrap-4') }}
                             </div>
                         </div>
                     </div>
