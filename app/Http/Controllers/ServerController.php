@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Server;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Pagination\Paginator;
 use Vinkla\Hashids\Facades\Hashids;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ServerController extends Controller
 {
@@ -59,12 +58,12 @@ class ServerController extends Controller
 
     protected function paginate($items, $perPage)
     {
-        if(is_array($items)){
+        if (is_array($items)) {
             $items = collect($items);
         }
 
         return new LengthAwarePaginator(
-            $items->forPage(Paginator::resolveCurrentPage() , $perPage),
+            $items->forPage(Paginator::resolveCurrentPage(), $perPage),
             $items->count(), $perPage,
             Paginator::resolveCurrentPage(),
             ['path' => Paginator::resolveCurrentPath()]

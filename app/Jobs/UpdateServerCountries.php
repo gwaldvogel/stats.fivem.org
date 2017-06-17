@@ -2,15 +2,15 @@
 
 namespace App\Jobs;
 
+use Carbon\Carbon;
 use App\ServerCountry;
 use App\OverallStatistics;
-use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\Cache;
 
 class UpdateServerCountries implements ShouldQueue
 {

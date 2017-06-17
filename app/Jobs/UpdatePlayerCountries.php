@@ -2,15 +2,15 @@
 
 namespace App\Jobs;
 
+use Carbon\Carbon;
 use App\PlayerCountry;
 use App\OverallStatistics;
-use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\Cache;
 
 class UpdatePlayerCountries implements ShouldQueue
 {
@@ -54,7 +54,7 @@ class UpdatePlayerCountries implements ShouldQueue
         }
 
         foreach ($playerCount as $countryCode => $count) {
-            if(!empty($countryCode) && !empty($countryCodeToCountry[$countryCode])) {
+            if (! empty($countryCode) && ! empty($countryCodeToCountry[$countryCode])) {
                 $playerCountry = new PlayerCountry();
                 $playerCountry->country = $countryCodeToCountry[$countryCode];
                 $playerCountry->country_code = $countryCode;

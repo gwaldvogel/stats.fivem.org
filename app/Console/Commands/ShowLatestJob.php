@@ -41,10 +41,10 @@ class ShowLatestJob extends Command
         $latest = null;
         $duplicates = [];
         $messages = [];
-        while(true) {
+        while (true) {
             $current = Cache::get('fivem:worker:latest', '');
-            if($current != $latest) {
-                if(array_search($current, $messages)) {
+            if ($current != $latest) {
+                if (array_search($current, $messages)) {
                     $this->error('Duplicate: '.$current);
                     $duplicates[] = $current;
                 }

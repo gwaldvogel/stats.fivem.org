@@ -7,11 +7,11 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use App\PlayerStatistic;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\Cache;
 
 class UpdatePlayerStatistics implements ShouldQueue
 {
@@ -67,7 +67,6 @@ class UpdatePlayerStatistics implements ShouldQueue
         }
 
         if ($this->serverId == null) {
-
             return;
         }
 
