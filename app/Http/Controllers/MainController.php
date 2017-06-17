@@ -31,7 +31,8 @@ class MainController extends Controller
         return view('index', [
             'FiveMLastHour' => $fivemStatsLastH,
             'CountryStatsServer' => $countryStatsServer->entries,
-            'CountryStatsPlayers' => $countryStatsPlayers->entries, ]);
+            'CountryStatsPlayers' => $countryStatsPlayers->entries,
+        ]);
     }
 
     public function dashboard()
