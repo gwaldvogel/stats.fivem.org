@@ -7,12 +7,12 @@ use Carbon\Carbon;
 use App\ServerHistory;
 use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Support\Facades\Cache;
 
 class UpdateServerStatistics implements ShouldQueue
 {
