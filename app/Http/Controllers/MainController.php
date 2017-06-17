@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\CountryStats;
 use App\FiveMStatsCrawl;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 
 class MainController extends Controller
 {
@@ -39,22 +39,25 @@ class MainController extends Controller
     {
         $users = Cache::remember('db:usercount', 5, function () {
             $u = DB::select('SELECT COUNT(id) AS count FROM users');
+
             return $u[0]->count;
         });
 
         $playerstatistics = Cache::remember('db:playerstatscount', 5, function () {
             $p = DB::select('SELECT COUNT(id) AS count FROM player_statistics');
+
             return $p[0]->count;
         });
 
-
         $servers = Cache::remember('db:servercount', 5, function () {
             $s = DB::select('SELECT COUNT(id) AS count FROM servers');
+
             return $s[0]->count;
         });
 
         $serverhistories = Cache::remember('db:serverhistorycount', 5, function () {
             $s = DB::select('SELECT COUNT(id) AS count FROM server_histories');
+
             return $s[0]->count;
         });
 
