@@ -85,7 +85,7 @@ class PlayerController extends Controller
             foreach ($ping as $p) {
                 $avgPing += $p;
             }
-            $servers[$s]['avgPing'] = $avgPing / $favorite[$s];
+            $servers[$s]['avgPing'] = round($avgPing / $favorite[$s], 1);
         }
 
         $avgPing = 0;
