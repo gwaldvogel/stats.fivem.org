@@ -2,12 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Player;
 use App\Server;
-use App\PlayerCrawl;
-use App\CountryStats;
-use App\CountryStatsEntry;
-use App\User;
 use Illuminate\Console\Command;
 
 class ParseCountryStats extends Command
@@ -48,17 +43,15 @@ class ParseCountryStats extends Command
         $servers = Server::all();
         foreach ($servers as $server) {
             if (! $server->country || ! $server->country_code) {
-                $this->info('Updating ' . $server->ip);
+                $this->info('Updating '.$server->ip);
                 $location = geoip()->getLocation($server->ip);
                 if (! $location->default && $location->iso_code && $location->country) {
                     $server->country_code = $location->iso_code;
                     $server->country = $location->country;
                     $server->city = $location->city;
                     $server->save();
-                }
-                else
-                {
-                    $this->error('Failed for ' . $server->ip);
+                } else {
+                    $this->error('Failed for '.$server->ip);
                 }
             }
         }
