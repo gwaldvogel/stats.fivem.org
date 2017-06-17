@@ -92,7 +92,7 @@ class PlayerController extends Controller
         foreach ($pings as $ping) {
             $avgPing += $ping;
         }
-        $avgPing = $avgPing / $pingCount;
+        $avgPing = round($avgPing / $pingCount, 1);
 
         return view('player', [
             'user' => $user,
