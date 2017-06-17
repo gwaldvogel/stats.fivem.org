@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\CountryStats;
 use App\FiveMStatsCrawl;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class MainController extends Controller
 {
@@ -35,7 +36,33 @@ class MainController extends Controller
 
     public function dashboard()
     {
-        return view('dashboard');
+        $users = Cache::remember('db:usercount', 5, function () {
+            $u = DB::select('SELECT COUNT(id) AS count FROM users');
+            return $u[0]->count;
+        });
+
+        $playerstatistics = Cache::remember('db:playerstatscount', 5, function () {
+            $p = DB::select('SELECT COUNT(id) AS count FROM player_statistics');
+            return $p[0]->count;
+        });
+
+
+        $servers = Cache::remember('db:servercount', 5, function () {
+            $s = DB::select('SELECT COUNT(id) AS count FROM servers');
+            return $s[0]->count;
+        });
+
+        $serverhistories = Cache::remember('db:serverhistorycount', 5, function () {
+            $s = DB::select('SELECT COUNT(id) AS count FROM server_histories');
+            return $s[0]->count;
+        });
+
+        return view('dashboard', [
+            'userCount' => $users,
+            'playerRecords' => $playerstatistics,
+            'serverCount' => $servers,
+            'serverHistoryRecords' => $serverhistories,
+        ]);
     }
 
     public function serversByCountry()

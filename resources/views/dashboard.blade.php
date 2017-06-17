@@ -7,6 +7,45 @@
     <div class="container-fluid">
         <div class="animated fadeIn">
             <div class="row">
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card card-inverse card-primary">
+                        <div class="card-block pb-0">
+                            <h4 class="mb-0">{{ $userCount }}</h4>
+                            <p>Unique players in the database</p>
+                        </div>
+                    </div>
+                </div>
+                <!--/.col-->
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card card-inverse card-primary">
+                        <div class="card-block pb-0">
+                            <h4 class="mb-0">{{ $playerRecords }}</h4>
+                            <p>Player records in the database</p>
+                        </div>
+                    </div>
+                </div>
+                <!--/.col-->
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card card-inverse card-primary">
+                        <div class="card-block pb-0">
+                            <h4 class="mb-0">{{ $serverCount }}</h4>
+                            <p>Unique servers in the database</p>
+                        </div>
+                    </div>
+                </div>
+                <!--/.col-->
+                <div class="col-sm-6 col-lg-3">
+                    <div class="card card-inverse card-primary">
+                        <div class="card-block pb-0">
+                            <h4 class="mb-0">{{ $serverHistoryRecords }}</h4>
+                            <p>Server history records in the database</p>
+                        </div>
+                    </div>
+                </div>
+                <!--/.col-->
+            </div>
+            <!--/.row-->
+            <div class="row">
                 <div class="col-sm-6 col-lg-6">
                     <div class="card card-inverse card-primary">
                         <div class="card-block pb-0">
