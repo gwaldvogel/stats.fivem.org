@@ -26,7 +26,7 @@
                 </div>
                 <!--/.col-->
                 <div class="col-sm-6 col-lg-3">
-                    <div class="card card-inverse card-primary">
+                    <div class="card card-inverse card-info">
                         <div class="card-block pb-0">
                             <h4 class="mb-0">{{ $serverCount }}</h4>
                             <p>Unique servers in the database</p>
@@ -35,7 +35,7 @@
                 </div>
                 <!--/.col-->
                 <div class="col-sm-6 col-lg-3">
-                    <div class="card card-inverse card-primary">
+                    <div class="card card-inverse card-info">
                         <div class="card-block pb-0">
                             <h4 class="mb-0">{{ $serverHistoryRecords }}</h4>
                             <p>Server history records in the database</p>
