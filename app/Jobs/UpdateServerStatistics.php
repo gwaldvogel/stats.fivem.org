@@ -12,6 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use GuzzleHttp\Exception\RequestException;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Cache;
 
 class UpdateServerStatistics implements ShouldQueue
 {
@@ -81,6 +82,10 @@ class UpdateServerStatistics implements ShouldQueue
         $server->max_clients = $this->serverData->Data->svMaxclients;
         $server->icon = $this->fetchServerIcon($ip, $port);
         $server->save();
+
+        Cache::put('fivem:worker:latest',
+            Carbon::now()->toTimeString().': UpdateServerStatistics('.$this->serverData->EndPoint.')',
+            10);
     }
 
     protected function removeColorsFromServerName($name)

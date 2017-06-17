@@ -4,11 +4,13 @@ namespace App\Jobs;
 
 use App\PlayerCountry;
 use App\OverallStatistics;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Cache;
 
 class UpdatePlayerCountries implements ShouldQueue
 {
@@ -52,12 +54,17 @@ class UpdatePlayerCountries implements ShouldQueue
         }
 
         foreach ($playerCount as $countryCode => $count) {
-            $playerCountry = new PlayerCountry();
-            $playerCountry->country = $countryCodeToCountry[$countryCode];
-            $playerCountry->country_code = $countryCode;
-            $playerCountry->overall_statistic_id = $this->overallStatistics->id;
-            $playerCountry->clients = $count;
-            $playerCountry->save();
+            if(!empty($countryCode) && !empty($countryCodeToCountry[$countryCode])) {
+                $playerCountry = new PlayerCountry();
+                $playerCountry->country = $countryCodeToCountry[$countryCode];
+                $playerCountry->country_code = $countryCode;
+                $playerCountry->overall_statistic_id = $this->overallStatistics->id;
+                $playerCountry->clients = $count;
+                $playerCountry->save();
+            }
         }
+        Cache::put('fivem:worker:latest',
+            Carbon::now()->toTimeString().': UpdatePlayerCountries',
+            10);
     }
 }

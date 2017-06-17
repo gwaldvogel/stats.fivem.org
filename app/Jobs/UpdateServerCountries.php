@@ -4,11 +4,13 @@ namespace App\Jobs;
 
 use App\ServerCountry;
 use App\OverallStatistics;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Cache;
 
 class UpdateServerCountries implements ShouldQueue
 {
@@ -61,5 +63,8 @@ class UpdateServerCountries implements ShouldQueue
             $serverCountry->servers = $count;
             $serverCountry->save();
         }
+        Cache::put('fivem:worker:latest',
+            Carbon::now()->toTimeString().': UpdateServerCountries',
+            10);
     }
 }

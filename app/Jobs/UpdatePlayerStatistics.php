@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\User;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use App\PlayerStatistic;
 use Illuminate\Bus\Queueable;
@@ -10,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Cache;
 
 class UpdatePlayerStatistics implements ShouldQueue
 {
@@ -65,6 +67,7 @@ class UpdatePlayerStatistics implements ShouldQueue
         }
 
         if ($this->serverId == null) {
+
             return;
         }
 
@@ -74,5 +77,8 @@ class UpdatePlayerStatistics implements ShouldQueue
         $playerStatistic->ping = $ping;
         $playerStatistic->name = $name;
         $playerStatistic->save();
+        Cache::put('fivem:worker:latest',
+            Carbon::now()->toTimeString().': UpdatePlayerStatistics('.$name.', '.$this->serverId.')',
+            10);
     }
 }

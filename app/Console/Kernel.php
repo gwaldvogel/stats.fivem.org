@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\CrawlFivemApi;
+use App\Console\Commands\ShowLatestJob;
 use App\Console\Commands\UpdateGitVersion;
 use App\Console\Commands\ParseCountryStats;
 use App\Console\Commands\UpdateServerIcons;
@@ -27,6 +28,7 @@ class Kernel extends ConsoleKernel
         GenerateHashidsSalt::class,
         CrawlFivemApi::class,
         CleanupServerIconCache::class,
+        ShowLatestJob::class,
     ];
 
     /**
