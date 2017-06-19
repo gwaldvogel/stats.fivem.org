@@ -107,7 +107,7 @@ class PrivateApiController extends Controller
         $serverHistory = Cache::remember('api:server:'.$id.':history', 30, function () use ($id) {
             $server = Server::findOrFail($id);
             $out = [];
-            $serverHistories = $server->histories()->where('created_at', '>', Carbon::now()->subHours(24))->get();
+            $serverHistories = $server->histories()->where('created_at', '>', Carbon::now()->subHours(1))->get();
             foreach ($serverHistories as $history) {
                 $out['datetime'][] = $history->created_at->toIso8601String();
                 $out['playerCount'][] = $history->clients;
