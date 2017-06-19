@@ -18,28 +18,30 @@ class PlayerController extends Controller
     {
         if (strlen($request->input('search')) < 3) {
             $request->session()->flash('alert-danger', 'Your search string has to have at least 3 digits!');
+
             return redirect('/search/player');
         }
 
         $users = User::where('steam_id', $request->input('search'))->get();
         if ($users->isEmpty()) {
-            $users = User::where('nickname', 'like', '%' . $request->input('search') . '%')->get();
+            $users = User::where('nickname', 'like', '%'.$request->input('search').'%')->get();
         }
 
         if ($users->count() > 1) {
             return view('searchplayer', ['users' => $users]);
         } elseif ($users->isEmpty()) {
             $request->session()->flash('alert-danger', 'Nothing found, sorry!');
+
             return redirect('/search/player');
         } else {
-            return redirect('/player/' . $users[0]->steam_id);
+            return redirect('/player/'.$users[0]->steam_id);
         }
     }
 
     public function getPlayer($steamId, $toggle = false)
     {
         $user = User::where('steam_id', $steamId)->first();
-        if (!$user) { // user does not exist
+        if (! $user) { // user does not exist
             abort(404);
         } elseif ($toggle != false && $user->id == Auth::user()->id) { // toggling hidden status
             $user->hidden = $user->hidden ? false : true;
