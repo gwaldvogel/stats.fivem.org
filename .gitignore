@@ -1,6 +1,8 @@
 /node_modules
 /public/hot
 /public/storage
+/public/server_icons/*
+!/public/server_icons/default.png
 /storage/*.key
 /vendor
 /.idea

@@ -61,7 +61,7 @@ class UpdateServerStatistics implements ShouldQueue
             $server = new Server();
             $server->ip = $ip;
             $server->port = $port;
-            $location = $location = geoip()->getLocation($ip);
+            $location = geoip()->getLocation($ip);
             if (! $location->default) {
                 $server->country_code = $location->iso_code;
                 $server->country = $location->country;
