@@ -58,6 +58,22 @@ class CreateServerListCache extends Command
             ];
         }
         Cache::put('servers:array', $outArray, 30);
+        $this->calculateDatabaseStats();
         $this->info('Done in '.round(microtime(true) - $start, 3).' secs');
+    }
+
+    private function calculateDatabaseStats() {
+
+        $u = DB::select('SELECT COUNT(id) AS count FROM users');
+        Cache::put('db:usercount', $u[0]->count, 30);
+
+        $p = DB::select('SELECT COUNT(id) AS count FROM player_statistics');
+        Cache::put('db:playerstatscount', $p[0]->count, 30);
+
+        $s = DB::select('SELECT COUNT(id) AS count FROM servers');
+        Cache::put('db:servercount', $s[0]->count, 30);
+
+        $s = DB::select('SELECT COUNT(id) AS count FROM server_histories');
+        Cache::put('db:serverhistorycount', $s[0]->count, 30);
     }
 }

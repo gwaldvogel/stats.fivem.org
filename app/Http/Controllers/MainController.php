@@ -10,56 +10,34 @@ use Illuminate\Support\Facades\Cache;
 
 class MainController extends Controller
 {
-    public function index()
+
+    public function redirectToDashboard()
     {
-        $fivemStatsLastH = Cache::remember('fivemstatscrawl', 5, function () {
-            return FiveMStatsCrawl::where('updated_at', '>', Carbon::now()->subHours(1))->get();
-        });
-
-        $countryStatsServer = Cache::remember('countrystatsserver', 5, function () {
-            return CountryStats::where('servers', '=', true)
-                ->orderBy('updated_at', 'desc')
-                ->first();
-        });
-
-        $countryStatsPlayers = Cache::remember('countrystatsplayers', 5, function () {
-            return CountryStats::where('servers', '=', false)
-                ->orderBy('updated_at', 'desc')
-                ->first();
-        });
-
-        return view('index', [
-            'FiveMLastHour' => $fivemStatsLastH,
-            'CountryStatsServer' => $countryStatsServer->entries,
-            'CountryStatsPlayers' => $countryStatsPlayers->entries,
-        ]);
+        return redirect('/dashboard');
     }
 
     public function dashboard()
     {
-        $users = Cache::remember('db:usercount', 5, function () {
-            $u = DB::select('SELECT COUNT(id) AS count FROM users');
+        $users = 0;
+        if (Cache::has('db:usercount')) {
+            $users = Cache::get('db:usercount');
+        }
 
-            return $u[0]->count;
-        });
 
-        $playerstatistics = Cache::remember('db:playerstatscount', 5, function () {
-            $p = DB::select('SELECT COUNT(id) AS count FROM player_statistics');
+        $playerstatistics = 0;
+        if (Cache::has('db:playerstatscount')) {
+            $playerstatistics = Cache::get('db:playerstatscount');
+        }
 
-            return $p[0]->count;
-        });
+        $servers = 0;
+        if (Cache::has('db:servercount')) {
+            $servers = Cache::get('db:servercount');
+        }
 
-        $servers = Cache::remember('db:servercount', 5, function () {
-            $s = DB::select('SELECT COUNT(id) AS count FROM servers');
-
-            return $s[0]->count;
-        });
-
-        $serverhistories = Cache::remember('db:serverhistorycount', 5, function () {
-            $s = DB::select('SELECT COUNT(id) AS count FROM server_histories');
-
-            return $s[0]->count;
-        });
+        $serverhistories = 0;
+        if (Cache::has('db:serverhistorycount')) {
+            $serverhistories = Cache::get('db:serverhistorycount');
+        }
 
         return view('dashboard', [
             'userCount' => $users,
@@ -77,5 +55,10 @@ class MainController extends Controller
     public function playersByCountry()
     {
         return view('playersMap');
+    }
+
+    public function credits()
+    {
+        return view('credits');
     }
 }
