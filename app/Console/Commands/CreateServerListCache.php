@@ -62,8 +62,8 @@ class CreateServerListCache extends Command
         $this->info('Done in '.round(microtime(true) - $start, 3).' secs');
     }
 
-    private function calculateDatabaseStats() {
-
+    private function calculateDatabaseStats()
+    {
         $u = DB::select('SELECT COUNT(id) AS count FROM users');
         Cache::put('db:usercount', $u[0]->count, 30);
 

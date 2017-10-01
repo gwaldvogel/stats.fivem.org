@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use App\CountryStats;
-use App\FiveMStatsCrawl;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 
 class MainController extends Controller
 {
-
     public function redirectToDashboard()
     {
         return redirect('/dashboard');
@@ -22,7 +18,6 @@ class MainController extends Controller
         if (Cache::has('db:usercount')) {
             $users = Cache::get('db:usercount');
         }
-
 
         $playerstatistics = 0;
         if (Cache::has('db:playerstatscount')) {
