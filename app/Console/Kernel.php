@@ -39,8 +39,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('crawl')->everyTenMinutes();
-        $schedule->command('cache:serverlist')->everyTenMinutes();
+        $schedule->command('crawl')->everyThirtyMinutes();
+        $schedule->command('cache:serverlist')->everyThirtyMinutes();
         $schedule->command('cache:cleanup:servericons')->daily();
     }
 
