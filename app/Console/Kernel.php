@@ -29,6 +29,7 @@ class Kernel extends ConsoleKernel
         CrawlFivemApi::class,
         CleanupServerIconCache::class,
         ShowLatestJob::class,
+        CreateStatisticCache::class,
     ];
 
     /**
@@ -42,6 +43,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('crawl')->everyThirtyMinutes();
         $schedule->command('cache:serverlist')->everyThirtyMinutes();
         $schedule->command('cache:cleanup:servericons')->daily();
+        $schedule->command('fivem:cache:dbstats')->daily();
     }
 
     /**
