@@ -11,6 +11,7 @@ use Illuminate\Console\Scheduling\Schedule;
 use App\Console\Commands\GenerateHashidsSalt;
 use App\Console\Commands\CreateServerListCache;
 use App\Console\Commands\CleanupServerIconCache;
+use App\Console\Commands\CreateStatisticCache;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
